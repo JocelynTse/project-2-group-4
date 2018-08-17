@@ -7,13 +7,13 @@
 
 # PROJECT PROPOSAL : Central Hub for Sporting Associations
 ### Introduction
-UT Coding Bootcamp – Project team #5 was formed to complete project #1 requirements
+UT Coding Bootcamp – Project team #4 was forged in the  to complete project #2 requirements
 The team will execute a web development initiative to improve work processes and user experience surrounding sports registration.
 The intended software will provide a central hub for sporting associations management to move away from a manual paper or Microsoft Excel-based work processes, as well provide an enhanced user experience to its participating members (up to 2000 unique members).
 The intended development effort is to be undertaken using an Agile framework based on a most viable product definition. Sprint plans will be laid out as part of Phase 1 kick off activities.
  
 ### Needs/Problems
-Paper or Microsoft Excel-based approaches are common ways to manage and run sporting associations. These associations typically start small, thus making these techniques a quick and easy method to hit the ground running without added costs or administrative overheads. However, for obvious reasons, these do not allow management to scale to accommodate growth mostly due to:
+
 * Creation of "Excel hell" – an inability to easily store, access, update membership information among association team members
 * Inability to quickly share information and updates with members
 * Inability for members to quickly search for and get involved in sporting opportunities
