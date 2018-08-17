@@ -24,4 +24,15 @@ module.exports = function(app) {
   app.get("*", function(req, res) {
     res.render("404");
   });
+
+
+  //need main page "/" route to display homepage
+
+  //need a login page route
+
+  //need a create account route
+
+  //need a route for create/navigate wishlist page
+
+  //need a route for the wishlist. probably looks like "/wishlists/:id"
 };

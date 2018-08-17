@@ -21,4 +21,32 @@ module.exports = function(app) {
       res.json(dbExample);
     });
   });
+
+  //get route to grab all the wishlist names
+  app.get("/api/wishlists",function(req,res){
+    db.wishlists.findAll({}).then(function(result){
+      res.json(result);
+    })
+  })
+  //get route to grab all the items for a particular wishlist
+
+  //get route to grab all the comments for a particular wishlist
+
+  //get route to grab all the wishlists created by a particular user
+
+  //we need to find a way to make the subscriptions work...
+
+  //post route to create a new wishlist
+
+  //post route to create a new item and assign it to a wishlist
+
+  //post route to create a new comment and assign it to a wishlist
+
+  //post route to create a new user
+
+  //put route that will change the checked value from true to false or false to true
+
+  //optional(not mvp): put route to change a users password
+
+  //delete route to delete an item from a wishlist
 };
