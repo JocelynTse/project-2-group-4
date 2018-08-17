@@ -4,10 +4,10 @@
         "commonjs": true,
         "node": true
     },
-    "extends": "prettier",
-    "plugins": [
-        "prettier"
-      ],
+    // "extends": "prettier",
+    // "plugins": [
+        // "prettier"
+    //   ],
     "rules": {
         "no-duplicate-case":"error",
         "no-empty":"error",
@@ -38,6 +38,6 @@
             "error",
             "always"
         ],
-        "prettier/prettier": "error"
+        // "prettier/prettier": "error"
     }
 }
