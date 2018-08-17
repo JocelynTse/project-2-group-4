@@ -2,8 +2,8 @@
 
 * Project Manager: Reza Rastegar
 * Git Master: Jocelyn Tse
-* Deployed Project: 
-* Code on GitHub: 
+* Deployed Project: Heroku deployed link
+* GitHub repository: https://github.com/JocelynTse/project-2-group-4.git
 
 # PROJECT PROPOSAL : Wishlist App
 ### Introduction
