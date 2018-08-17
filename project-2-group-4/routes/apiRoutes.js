@@ -58,7 +58,7 @@ module.exports = function(app) {
   //we need to find a way to make the subscriptions work...
 
   //post route to create a new wishlist
-
+  
   //post route to create a new item and assign it to a wishlist
 
   //post route to create a new comment and assign it to a wishlist
