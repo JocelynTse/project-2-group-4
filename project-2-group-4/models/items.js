@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         default: false
       },
-      checked_by: Datatypes.STRING
+      checked_by: DataTypes.STRING
     });
     return items;
   };

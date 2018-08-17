@@ -23,7 +23,11 @@ module.exports = function(app) {
   });
 
   //get route to grab all the wishlist names
-
+  app.get("/api/wishlists",function(req,res){
+    db.wishlists.findAll({}).then(function(result){
+      res.json(result);
+    })
+  })
   //get route to grab all the items for a particular wishlist
 
   //get route to grab all the comments for a particular wishlist
