@@ -28,6 +28,12 @@ module.exports = function (app) {
       res.json(result);
     });
   });
+  //get route to search for wishlist with specific name
+  app.get("/api/wishlists/:name",function(req,res){
+    db.wishlists.findAll({where:{_name:req.params.name}}).then(function(result){
+      res.json(result);
+    })
+  })
   //get route to grab all the items for a particular wishlist
   app.get("/api/items/:id", function (req, res) {
     let id = req.params.id;

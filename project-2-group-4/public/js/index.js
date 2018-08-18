@@ -108,6 +108,13 @@ var API = {
       return new Promise(resolve=>{
          $.get("/api/wishlists/"+id).then(function(result){resolve(result)})
       })
+    },
+    byname: function(name){
+      return new Promise(resolve=>{
+        $.get("/api/wishlists/"+name).then(function(result){
+          resolve(result);
+        })
+      })
     }
   },
     items:{
@@ -179,4 +186,13 @@ var API = {
 }
 
 
+
+
+
+
+
+
+
+// need sign in button to redirect to sign in page.
+// need sign up button to redirect to correct page
 
