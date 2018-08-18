@@ -109,7 +109,7 @@ var API = {
          $.get("/api/wishlists/"+id).then(function(result){resolve(result)})
       })
     },
-    byname: function(name){
+    byName: function(name){
       return new Promise(resolve=>{
         $.get("/api/wishlists/"+name).then(function(result){
           resolve(result);
@@ -118,7 +118,7 @@ var API = {
     }
   },
     items:{
-      byWishlistId: function(id){
+      byWishlistID: function(id){
         return new Promise(resolve=>{
           $.get("/api/items/"+id).then(function(result){
             resolve(result);
@@ -127,7 +127,7 @@ var API = {
       }
     },
     comments:{
-      byWishlistId: function(id){
+      byWishlistID: function(id){
         return new Promise(resolve=>{
           $.get("/api/comments/"+id).then(function(result){resolve(result)})
         })
