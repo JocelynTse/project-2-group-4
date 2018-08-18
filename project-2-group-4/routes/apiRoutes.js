@@ -49,7 +49,7 @@ module.exports = function(app) {
   //get route to grab all the wishlists created by a particular user
   app.get("/api/wishlists/:creatorID",function(req,res){
     let id = req.params.creatorID;
-    db.comments.findAll({
+    db.wishlists.findAll({
       where:{creatorID:id}
     }).then(function(result){
       res.json(result);
@@ -74,6 +74,7 @@ module.exports = function(app) {
 
   //post route to create a new comment and assign it to a wishlist
   app.post("/api/comments", function(req, res) {
+    // console.log(req.body)
     db.comments.create(req.body).then(function(result) {
       res.json(result);
     });
@@ -81,6 +82,7 @@ module.exports = function(app) {
 
   //post route to create a new user
   app.post("/api/users", function(req, res) {
+    console.log(req.body)
     db.users.create(req.body).then(function(result) {
       res.json(result);
     });
