@@ -65,6 +65,26 @@ module.exports = function(app) {
   });
 
   //put route that will change the checked value from true to false or false to true
+  app.put("/api/items/:checked", function(req, res) {
+    if (req.body.checked == true) {
+      db.items.update(
+        {checked: req.body.checked},
+        {where: req.params.id}
+      )
+        .then(function(result) {
+        res.json(result);
+      });
+    }
+    else {
+    db.items.update(
+      {checked: req.body.checked},
+      {where: req.params.id}
+    )
+      .then(function(result) {
+      res.json(result);
+      });
+  }
+  });
 
   //optional(not mvp): put route to change a users password
 
