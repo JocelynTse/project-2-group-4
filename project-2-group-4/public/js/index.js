@@ -157,6 +157,26 @@ var API = {
       })
     }
   },
-  update:{},
-  delete:{}
+  update:{
+    check: function(checked,id,checked_by){
+      return new Promise(resolve=>{
+        $.update("/api/items",{id:id,checked:checked,checked_by:checked_by})
+        .then(function(result){resolve(result);})
+      })
+      
+
+    }
+  },
+  delete:{
+    item:function(id)
+    { 
+      return new Promise(resolve=>{
+         $.delete("/api/items/"+id).then(function(result){resolve(result)})
+      })
+     
+    }
+  }
 }
+
+
+
