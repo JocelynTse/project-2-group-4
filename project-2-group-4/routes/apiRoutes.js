@@ -58,12 +58,33 @@ module.exports = function(app) {
   //we need to find a way to make the subscriptions work...
 
   //post route to create a new wishlist
-  
+
+  app.post("/api/wishlists", function(req, res) {
+    db.wishlists.create(req.body).then(function(result) {
+      res.json(result);
+    });
+  });
+
   //post route to create a new item and assign it to a wishlist
+  app.post("/api/items", function(req, res) {
+    db.items.create(req.body).then(function(result) {
+      res.json(result);
+    });
+  });
 
   //post route to create a new comment and assign it to a wishlist
+  app.post("/api/comments", function(req, res) {
+    db.comments.create(req.body).then(function(result) {
+      res.json(result);
+    });
+  });
 
   //post route to create a new user
+  app.post("/api/users", function(req, res) {
+    db.users.create(req.body).then(function(result) {
+      res.json(result);
+    });
+  });
 
   //put route that will change the checked value from true to false or false to true
 
