@@ -10,14 +10,14 @@ module.exports = function (app) {
       });
     });
   });
-  // send to google to do the authentication profile gets us their basic information including their name
-  app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
-  // the callback after google has authenticated the user
-  app.get('/auth/google/callback',
-    passport.authenticate('google', {
-      successRedirect: '/profile',
-      failureRedirect: '/'
-    }));
+  // // send to google to do the authentication profile gets us their basic information including their name
+  // app.get('/auth/google', passport.authenticate('google', { scope : ['profile'] }));
+  // // the callback after google has authenticated the user
+  // app.get('/auth/google/callback',
+  // passport.authenticate('google', {
+  //         successRedirect : '/profile',
+  //         failureRedirect : '/'
+  // }));
 
 
   app.get('/login', function (req, res) {
@@ -28,11 +28,11 @@ module.exports = function (app) {
   app.get('/signup', function (req, res) {
     res.render('signup');
   });
-
-  // Loads personal view after login
-  app.get('/personal', isLoggedIn, function (req, res) {
-    res.render('personalview')
-  });
+  
+  // // Loads personal view after login
+  // app.get('/personal', isLoggedIn, function(req, res) {
+  //   res.render('personalview')
+  // });
   // Confirms logged in to proceed to next page
   // function LoggedIn(req, res, next) {
   //   if (req.isAuthenticated())

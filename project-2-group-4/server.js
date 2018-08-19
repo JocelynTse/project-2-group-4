@@ -36,9 +36,9 @@ if (process.env.NODE_ENV === "test") {
 }
 
 // Passport
-// app.use(session({ secret: 'trilogy' })); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
+//  app.use(session({ secret: 'trilogy' })); // session secret
+//  app.use(passport.initialize());
+//  app.use(passport.session()); // persistent login sessions
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {

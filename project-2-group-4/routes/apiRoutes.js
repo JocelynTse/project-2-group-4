@@ -28,6 +28,12 @@ module.exports = function (app) {
       res.json(result);
     });
   });
+  //get route to search for wishlist with specific name
+  app.get("/api/wishlists/:name",function(req,res){
+    db.wishlists.findAll({where:{_name:req.params.name}}).then(function(result){
+      res.json(result);
+    })
+  })
   //get route to grab all the items for a particular wishlist
   app.get("/api/items/:id", function (req, res) {
     let id = req.params.id;
@@ -49,9 +55,9 @@ module.exports = function (app) {
   //get route to grab all the wishlists created by a particular user
   app.get("/api/wishlists/:creatorID", function (req, res) {
     let id = req.params.creatorID;
-    db.comments.findAll({
-      where: { creatorID: id }
-    }).then(function (result) {
+    db.wishlists.findAll({
+      where:{creatorID:id}
+    }).then(function(result){
       res.json(result);
     });
   });
@@ -73,8 +79,9 @@ module.exports = function (app) {
   });
 
   //post route to create a new comment and assign it to a wishlist
-  app.post("/api/comments", function (req, res) {
-    db.comments.create(req.body).then(function (result) {
+  app.post("/api/comments", function(req, res) {
+    // console.log(req.body)
+    db.comments.create(req.body).then(function(result) {
       res.json(result);
     });
   });
@@ -87,10 +94,11 @@ module.exports = function (app) {
   });
 
   //put route that will change the checked value from true to false or false to true
-  app.put("/api/items/:checked", function (req, res) {
+  app.put("/api/items", function (req, res) {
     if (req.body.checked == true) {
       db.items.update(
-        { checked: req.body.checked },
+        { checked: req.body.checked,
+          checked_by: req.body.checked_by },
         { where: req.params.id }
       )
         .then(function (result) {
@@ -99,7 +107,8 @@ module.exports = function (app) {
     }
     else {
       db.items.update(
-        { checked: req.body.checked },
+        { checked: req.body.checked,
+          checked_by: null },
         { where: req.params.id }
       )
         .then(function (result) {
