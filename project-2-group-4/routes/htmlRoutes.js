@@ -39,29 +39,11 @@ module.exports = function (app) {
   //   return next();
   //   res.redirect('/');
   // }
-
-  // Render 404 page for any unmatched routes
-  app.get("*", function (req, res) {
-    res.render("404");
-  });
-
-
-  //need main page "/" route to display homepage
-  // app.get('/', function (req, res) {
-  //   res.render('home');//why is this called home and not index?
-  // });
-
-  //need a route for create/navigate wishlist page
-  app.get('/wishlists', function (req, res) {
-    res.render('wishlists');
-  });
-
-
   //why  the fuck doesn't this work??????????????????????????????????????
   //why  will this not route??? not even a hello on the server??????????
   //need a route for the wishlist. probably looks like "/wishlists/:id"
-  app.get("/wishlists/:id", function (req, res) {
-    console.log("hello i have runnnnn i am sentient: response goes here why is there no response");
+  app.get("/wishlist/:id", function (req, res) {
+    console.log("hello fromm server")
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
         let wishlist=result;
         db.items.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
@@ -81,5 +63,23 @@ module.exports = function (app) {
     
     
   });
+  // Render 404 page for any unmatched routes
+  app.get("*", function (req, res) {
+    res.render("404");
+  });
+
+
+  //need main page "/" route to display homepage
+  // app.get('/', function (req, res) {
+  //   res.render('home');//why is this called home and not index?
+  // });
+
+  //need a route for create/navigate wishlist page
+  // app.get('/wishlists', function (req, res) {
+  //   res.render('wishlists');
+  // });
+
+
+
 };
 
