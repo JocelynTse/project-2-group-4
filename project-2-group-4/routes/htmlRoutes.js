@@ -4,10 +4,10 @@ module.exports = function (app) {
   // Load index page
   app.get("/", function (req, res) {
     db.Example.findAll({}).then(function (dbExamples) {
-      res.render("index", {
+      res.render("index"/*, {
         msg: "Welcome!",
         examples: dbExamples
-      });
+      }*/);
     });
   });
   // // send to google to do the authentication profile gets us their basic information including their name
@@ -47,17 +47,21 @@ module.exports = function (app) {
 
 
   //need main page "/" route to display homepage
-  app.get('/', function (req, res) {
-    res.render('home');
-  });
+  // app.get('/', function (req, res) {
+  //   res.render('home');//why is this called home and not index?
+  // });
 
   //need a route for create/navigate wishlist page
   app.get('/wishlists', function (req, res) {
     res.render('wishlists');
   });
 
+
+  //why  the fuck doesn't this work??????????????????????????????????????
+  //why  will this not route??? not even a hello on the server??????????
   //need a route for the wishlist. probably looks like "/wishlists/:id"
-  app.get('/wishlists/:id', function (req, res) {
+  app.get("/wishlists/:id", function (req, res) {
+    console.log("hello i have runnnnn i am sentient: response goes here why is there no response");
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
         let wishlist=result;
         db.items.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
@@ -70,7 +74,7 @@ module.exports = function (app) {
             comments:comments,
             items:items
           }
-            res.render('wishlist',obj)
+            res.render('wishlist',obj);
           })
         })
     })
@@ -78,3 +82,4 @@ module.exports = function (app) {
     
   });
 };
+
