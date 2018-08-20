@@ -157,7 +157,7 @@ var API = {
         $.post("/api/users",obj).then(function(result){resolve(result)})
       })
     },
-    comments: function(message,poster,wishlistId){
+    comment: function(message,poster,wishlistId){
       let obj = {msg:message,poster:poster,wishlistID:wishlistId}
       $.post("/api/comments",obj).then(function(result){
         resolve(result);
@@ -189,10 +189,4 @@ var API = {
 
 
 
-
-
-
-
-// need sign in button to redirect to sign in page.
-// need sign up button to redirect to correct page
 
