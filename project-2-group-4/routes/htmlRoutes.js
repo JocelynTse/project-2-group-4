@@ -58,6 +58,23 @@ module.exports = function (app) {
 
   //need a route for the wishlist. probably looks like "/wishlists/:id"
   app.get('/wishlists/:id', function (req, res) {
-    res.render('');
+    db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
+        let wishlist=result;
+        db.items.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
+          let items = result;
+          db.comments.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
+            let comments = result;
+
+            let obj = {
+            wishlist:wishlist,
+            comments:comments,
+            items:items
+          }
+            res.render('wishlist',obj)
+          })
+        })
+    })
+    
+    
   });
 };

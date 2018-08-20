@@ -34,6 +34,12 @@ module.exports = function (app) {
       res.json(result);
     })
   })
+  //get route to search for wishlist with specific id
+  app.get("/api/wishlists/id/:id",function(req,res){
+    db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
+      res.json(result);
+    })
+  })
   //get route to grab all the items for a particular wishlist
   app.get("/api/items/:id", function (req, res) {
     let id = req.params.id;
