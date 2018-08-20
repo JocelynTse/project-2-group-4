@@ -1,0 +1,20 @@
+<div id="list">
+    <div>
+        <h3>unchecked</h3>
+        {{#each items}}
+            {{#unless checked}}
+                {{>lists-block checked=false}}
+            {{/unless}}
+        {{/each}}
+    </div>
+    <div>
+        <h3>checked</h3>
+        {{#each items}}
+            {{#unless checked}}
+                {{>lists-block checked=true}}
+            {{/unless}}
+        {{/each}}
+
+    </div>
+</div>
+
