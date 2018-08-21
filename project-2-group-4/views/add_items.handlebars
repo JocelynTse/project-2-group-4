@@ -1,0 +1,38 @@
+<header id="masthead">
+    <div class="container">
+        <a href="index.html" id="logo">
+            <img src="../public/images/logo.png">
+        </a>
+        <nav>
+            <ul class="nav justify-content-end">
+                <p>Welcome {{this.uname}}</p>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Create a new list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">View your lists</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="card">
+    <div class="card-header">
+        {{ this._name }}
+    </div>
+    <h5 class="card-header">Add items:</h5>
+    <div class="card-body">
+        <form action="/api/items" method="POST">
+            <div class="form-group">
+                <label for="itemName">Item name:</label>
+                <input type="text" class="form-control" id="itemName">
+            </div>
+            <div class="form-group">
+                <label for="itemLink"><i>Optional</i> Add web link:</label>
+                <input type="url" class="form-control" id="itemLink">
+            </div>
+            <button type="submit" class="btn btn-primary">Add item to {{ this._name }}!</button>
+        </form>
+    </div>
+</div>

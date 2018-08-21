@@ -7,7 +7,11 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         default: false
       },
-      checked_by: DataTypes.STRING
+      checked_by: {
+        type: DataTypes.STRING,
+        allowNull:true,
+        default: null
+                  }
     });
     return items;
   };
