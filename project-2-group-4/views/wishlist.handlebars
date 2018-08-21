@@ -10,9 +10,9 @@
     <div>
         <h3>checked</h3>
         {{#each items}}
-            {{#unless checked}}
+            {{#if checked}}
                 {{>lists-block checked=true}}
-            {{/unless}}
+            {{/if}}
         {{/each}}
 
     </div>
