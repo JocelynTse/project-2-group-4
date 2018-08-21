@@ -39,22 +39,30 @@ module.exports = function (app) {
   //   return next();
   //   res.redirect('/');
   // }
-  //why  the fuck doesn't this work??????????????????????????????????????
-  //why  will this not route??? not even a hello on the server??????????
+ 
   //need a route for the wishlist. probably looks like "/wishlists/:id"
   app.get("/wishlist/:id", function (req, res) {
-    console.log("hello fromm server")
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
-        let wishlist=result;
-        db.items.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
-          let items = result;
-          db.comments.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
-            let comments = result;
+        var wishlist=result;
 
-            let obj = {
-            wishlist:wishlist,
-            comments:comments,
-            items:items
+        db.items.findAll({where:{wishlistID:wishlist[0].dataValues.id}}).then(function(result){
+          var items = result;
+          db.comments.findAll({where:{wishlistID:wishlist[0].dataValues.id}}).then(function(result){
+            var comments = result;
+            console.log(items)
+            let allItems = new Array()
+            items.forEach(element => {
+              allItems.push(element.dataValues);
+            });
+            let allComments = new Array()
+            comments.forEach(element => {
+              allComments.push(element.dataValues);
+            });
+            
+            var obj = {
+            wishlist:wishlist[0].dataValues,
+            comments:allComments,
+            items:allItems
           }
             res.render('wishlist',obj);
           })
