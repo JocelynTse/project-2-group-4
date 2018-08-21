@@ -49,7 +49,7 @@ module.exports = function (app) {
           var items = result;
           db.comments.findAll({where:{wishlistID:wishlist[0].dataValues.id}}).then(function(result){
             var comments = result;
-            console.log(items)
+            
             let allItems = new Array()
             items.forEach(element => {
               allItems.push(element.dataValues);
@@ -58,6 +58,7 @@ module.exports = function (app) {
             comments.forEach(element => {
               allComments.push(element.dataValues);
             });
+            console.log(allComments)
             
             var obj = {
             wishlist:wishlist[0].dataValues,
