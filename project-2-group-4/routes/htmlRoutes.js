@@ -38,14 +38,12 @@ module.exports = function (app) {
   //   if (req.isAuthenticated())
   //   return next();
   //   res.redirect('/');
-  // }
-  //why  the fuck doesn't this work??????????????????????????????????????
-  //why  will this not route??? not even a hello on the server??????????
+  
   //need a route for the wishlist. probably looks like "/wishlists/:id"
   app.get("/wishlist/:id", function (req, res) {
     console.log("hello fromm server")
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
-        let wishlist=result;
+        var wishlist=result;
         db.items.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
           let items = result;
           db.comments.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
