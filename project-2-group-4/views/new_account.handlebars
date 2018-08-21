@@ -1,7 +1,22 @@
+<header id="masthead">
+    <div class="container">
+        <a href="index.html" id="logo">
+            <img src="../public/images/logo.png">
+        </a>
+        <nav>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Log In</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
 <div class="card">
     <h5 class="card-header">Create a new Wishlist account</h5>
     <div class="card-body">
-        <form>
+        <form action="/api/users" method="POST"> 
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" aria-describedby="usernameHelp">
