@@ -38,10 +38,10 @@ module.exports = function (app) {
   //   if (req.isAuthenticated())
   //   return next();
   //   res.redirect('/');
-  
+  // }
+ 
   //need a route for the wishlist. probably looks like "/wishlists/:id"
   app.get("/wishlist/:id", function (req, res) {
-    console.log("hello fromm server")
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
         var wishlist=result;
         db.items.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
@@ -49,10 +49,25 @@ module.exports = function (app) {
           db.comments.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
             let comments = result;
 
-            let obj = {
-            wishlist:wishlist,
-            comments:comments,
-            items:items
+        db.items.findAll({where:{wishlistID:wishlist[0].dataValues.id}}).then(function(result){
+          var items = result;
+          db.comments.findAll({where:{wishlistID:wishlist[0].dataValues.id}}).then(function(result){
+            var comments = result;
+            
+            let allItems = new Array()
+            items.forEach(element => {
+              allItems.push(element.dataValues);
+            });
+            let allComments = new Array()
+            comments.forEach(element => {
+              allComments.push(element.dataValues);
+            });
+            console.log(allComments)
+            
+            var obj = {
+            wishlist:wishlist[0].dataValues,
+            comments:allComments,
+            items:allItems
           }
             res.render('wishlist',obj);
           })
