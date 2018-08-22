@@ -44,10 +44,6 @@ module.exports = function (app) {
   app.get("/wishlist/:id", function (req, res) {
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
         var wishlist=result;
-        db.items.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
-          let items = result;
-          db.comments.findAll({where:{wishlistID:wishlist.id}}).then(function(result){
-            let comments = result;
 
         db.items.findAll({where:{wishlistID:wishlist[0].dataValues.id}}).then(function(result){
           var items = result;
@@ -95,4 +91,3 @@ module.exports = function (app) {
 
 
 };
-
