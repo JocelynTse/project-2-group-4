@@ -94,10 +94,17 @@ module.exports = function (app) {
 
   //post route to create a new user
   app.post("/api/users", function (req, res) {
-    db.users.create(req.body).then(function (result) {
-      res.json(result);
+    db.users.findAll({where:{uname:req.body.uname}}).then(function(result){
+      if(result.length==0){
+             
+      db.users.create(req.body).then(function (result) {
+      res.json({result:result,redundantname:false});
+      })
+    }else{res.json({result:result,redundantname:true})}
+    })
+  
     });
-  });
+ 
 
   //put route that will change the checked value from true to false or false to true
   app.put("/api/items", function (req, res) {
