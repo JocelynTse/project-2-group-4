@@ -5,7 +5,10 @@
         </a>
         <nav>
             <ul class="nav justify-content-end">
-                <p>Welcome {{this.uname}}</p>
+                <p>Welcome {{ this.uname }}</p>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Search for members</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Create a new list</a>
                 </li>
@@ -20,7 +23,7 @@
 <div class="card">
     <h5 class="card-header">Create a new Wishlist</h5>
     <div class="card-body">
-        <form action="/api/wishlists" method="POST"> 
+        <form action="/api/wishlists" method="POST">
             <div class="form-group">
                 <label for="listName">Name of Wishlist</label>
                 <input type="text" class="form-control" id="wishlist" aria-describedby="usernameHelp">
