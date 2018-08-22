@@ -16,21 +16,21 @@
 <div class="card">
     <h5 class="card-header">Create a new Wishlist account</h5>
     <div class="card-body">
-        <form action="/api/users" method="POST"> 
+        <form action="/new_account" method="POST"> 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="usernameHelp">
+                <input type="text" class="form-control" id="username" name="uname" aria-describedby="usernameHelp">
                 <small id="usernameHelp" class="form-text text-muted">Enter your new Wishlist username.</small>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" name="password">
             </div>
-            <div class="form-group">
+            {{!-- <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
+            </div> --}}
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

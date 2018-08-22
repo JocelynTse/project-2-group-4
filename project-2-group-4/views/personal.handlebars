@@ -1,0 +1,38 @@
+<header id="masthead">
+    <div class="container">
+        <a href="index.html" id="logo">
+            <img src="../public/images/logo.png">
+        </a>
+        <nav>
+            <ul class="nav justify-content-end">
+                <p>Welcome {{this.uname}}</p>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Create a new list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">View your lists</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="card">
+    <h5 class="card-header">Create a new Wishlist</h5>
+    <div class="card-body">
+        <form action="/api/wishlists" method="POST"> 
+            <div class="form-group">
+                <label for="listName">Name of Wishlist</label>
+                <input type="text" class="form-control" id="wishlist" aria-describedby="usernameHelp">
+            </div>
+            <div class="form-group">
+                <label for="item">List Privacy:</label>
+                <br>
+                <input type="radio" name="private" value="0" checked> Private
+                <br>
+                <input type="radio" name="public" value="1"> Public
+            </div>
+            <button type="submit" class="btn btn-primary">Create list</button>
+        </form>
+    </div>
+</div>
