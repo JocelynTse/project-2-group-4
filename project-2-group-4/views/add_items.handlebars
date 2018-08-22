@@ -5,7 +5,10 @@
         </a>
         <nav>
             <ul class="nav justify-content-end">
-                <p>Welcome {{this.uname}}</p>
+                <p>Welcome {{ this.uname }}</p>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Search for members</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Create a new list</a>
                 </li>
@@ -29,7 +32,8 @@
                 <input type="text" class="form-control" id="itemName">
             </div>
             <div class="form-group">
-                <label for="itemLink"><i>Optional</i> Add web link:</label>
+                <label for="itemLink">
+                    <i>Optional</i> Add web link:</label>
                 <input type="url" class="form-control" id="itemLink">
             </div>
             <button type="submit" class="btn btn-primary">Add item to {{ this._name }}!</button>

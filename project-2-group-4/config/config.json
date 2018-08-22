@@ -8,7 +8,7 @@
   },
   "test": {
     "username": "root",
-    "password": null,
+    "password": "",
     "database": "wishlist_modelone",
     "host": "localhost",
     "dialect": "mysql",
