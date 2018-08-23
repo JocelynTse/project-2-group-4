@@ -59,14 +59,26 @@ module.exports = function (app) {
     });
   });
   //get route to grab all the wishlists created by a particular user
-  app.get("/api/wishlists/:creatorID", function (req, res) {
+  app.get("/api/wishlists/byCreator/:creatorID", function (req, res) {
     let id = req.params.creatorID;
     db.wishlists.findAll({
       where:{creatorID:id}
     }).then(function(result){
+      console.log("==-=-=-=--=-="+result)
       res.json(result);
+      
     });
   });
+
+  app.get("/api/user/:name",function(req,res){
+    let name = req.params.name
+    db.users.findAll({where:{uname:name}}).then(function(result){
+      obj={id:result[0].dataValues.id,error:false}
+      res.json(obj);
+    }).catch(function(err){
+      res.json({error:true})
+    })
+  })
   //we need to find a way to make the subscriptions work...
 
   //post route to create a new wishlist
@@ -104,6 +116,7 @@ module.exports = function (app) {
     })
   
     });
+    
  
 
   //put route that will change the checked value from true to false or false to true

@@ -12,9 +12,29 @@ var API = {
           $.get("/api/wishlists/" + id).then(function (result) { resolve(result) })
         })
       },
+      byCreatorName: function(name){
+        return new Promise(resolve=> {
+          $.get("/api/user/"+name).then(function(result){
+            if(result.error==true){alert("no user by that name")}else{
+
+            
+            id = result.id;
+            console.log(id)
+            $.get("/api/wishlists/byCreator/"+id).then(function(result){resolve(result)})
+            }
+          })
+        })
+      },
       byName: function (name) {
         return new Promise(resolve => {
           $.get("/api/wishlists/" + name).then(function (result) {
+            resolve(result);
+          })
+        })
+      },
+      byWishlistID: function(id){
+        return new Promise(resolve=> {
+          $.get("/api/wishlists/id/"+id).then(function (result){
             resolve(result);
           })
         })
@@ -99,8 +119,8 @@ $(".check").on("click", function (event) {
   if (checked == false) {
     API.update.check(checked, id, "feature coming soon").then(function (result) { console.log(result); location.reload() });
   }
-  if (checked) { API.update.check(checked, id, "nobody").then(function (result) { console.log(result) }); location.reload() }
-
+  if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result);location.reload();})}
+  
 });
 console.log("loaded")
 
@@ -113,3 +133,24 @@ $("#submitItem").on("click", function (event) {
     location.reload();
   });
 });
+
+
+
+//search page
+
+$("#searchbycreator").on("click",function(event){
+  event.preventDefault();
+  let creatorname = $("#member").val();
+  API.get.wishlists.byCreatorName(creatorname).then(function(result){
+    console.log(result)
+    $("#wishlists").empty();
+    result.forEach(element => {
+      $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
+
+    });
+    $(".wishlistButton").on("click",function(event){
+      let id=$(this).attr("data-id");
+      window.location.href = "/wishlist/"+id
+    })
+  })
+})

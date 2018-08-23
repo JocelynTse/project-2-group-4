@@ -41,12 +41,9 @@ module.exports = function (app) {
   // }
  
 
-
-
-  app.get("/wishlists/seachall",function(req,res){
-    res.render('search')
+  app.get("/wishlist/search",function(req,res){
+    res.render('search');
   })
-
 
   //need a route for the wishlist. probably looks like "/wishlists/:id"
   app.get("/wishlist/:id", function (req, res) {
@@ -66,7 +63,7 @@ module.exports = function (app) {
             });
             let allComments = new Array()
             comments.forEach(element => {
-           
+              console.log("-----------------"+JSON.stringify(result))
               db.users.findAll({where:{id:element.dataValues.poster}}).then(function(result){ pname = result[0].uname
                           let com = {id:element.dataValues.id,
                          msg:element.dataValues.msg,
