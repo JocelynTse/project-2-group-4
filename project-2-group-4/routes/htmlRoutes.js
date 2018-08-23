@@ -26,7 +26,7 @@ module.exports = function (app) {
 
 
   app.get('/signup', function (req, res) {
-    res.render('signup');
+    res.render('new-account');
   });
   
   // // Loads personal view after login
@@ -49,23 +49,44 @@ module.exports = function (app) {
           var items = result;
           db.comments.findAll({where:{wishlistID:wishlist[0].dataValues.id}}).then(function(result){
             var comments = result;
-            
-            let allItems = new Array()
+            db.users.findAll({where:{id:wishlist[0].dataValues.creatorID}}).then(function(result){
+              let creatorName=result[0].uname;
+              
+                  let allItems = new Array()
             items.forEach(element => {
               allItems.push(element.dataValues);
             });
             let allComments = new Array()
             comments.forEach(element => {
-              allComments.push(element.dataValues);
+           
+              db.users.findAll({where:{id:element.dataValues.poster}}).then(function(result){ pname = result[0].uname
+                          let com = {id:element.dataValues.id,
+                         msg:element.dataValues.msg,
+                         poster:element.dataValues.poster,
+                         createdAt:element.dataValues.createdAt,
+                         updatedAt:element.dataValues.updatedAt,
+                         posterName:pname}
+
+                          allComments.push(com);
+              
+              })
+  
+
             });
-            console.log(allComments)
-            
+
+  
             var obj = {
             wishlist:wishlist[0].dataValues,
             comments:allComments,
-            items:allItems
-          }
+            items:allItems,
+            creatorName:creatorName
+             }
             res.render('wishlist',obj);
+
+            })
+        
+            
+   
           })
         })
     })

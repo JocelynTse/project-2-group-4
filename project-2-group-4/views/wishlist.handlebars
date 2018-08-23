@@ -5,7 +5,8 @@
         </a>
         <nav>
             <ul class="nav justify-content-end">
-                <p>Welcome {{ this.uname }}</p>
+                <p> {{wishlist._name}}</p><hr>
+                <p>created by: {{creatorName}}</p><hr>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Search for members</a>
                 </li>
@@ -29,6 +30,13 @@
         <h3>checked</h3>
         {{#each items}} {{#if checked}} {{>lists-block checked=true}} {{/if}} {{/each}}
     </div>
+    <br>
+    <hr>
+    <br>
+    <input id="input-item" type="text">
+    </input>
+    <br><br>
+    <button id="submitItem">Submit</button>
 </div>
 
 <div id="comments">
@@ -37,7 +45,7 @@
         {{#each comments}} {{>comments-block}} {{/each}}
     </div>
 
-<input id="textBox" type="text">
+<input id="input-comment" type="text">
 </input>
 <br><br>
 <button id="submitComment">Submit</button>
