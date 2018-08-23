@@ -4,30 +4,18 @@ module.exports = function (app) {
   // Load index page
   app.get("/", function (req, res) {
     db.Example.findAll({}).then(function (dbExamples) {
-      res.render("index"/*, {
-        msg: "Welcome!",
-        examples: dbExamples
-      }*/);
+      res.render("index");
     });
   });
-  // // send to google to do the authentication profile gets us their basic information including their name
-  // app.get('/auth/google', passport.authenticate('google', { scope : ['profile'] }));
-  // // the callback after google has authenticated the user
-  // app.get('/auth/google/callback',
-  // passport.authenticate('google', {
-  //         successRedirect : '/profile',
-  //         failureRedirect : '/'
-  // }));
-
 
   app.get('/login', function (req, res) {
     res.render('login');
   });
 
-
   app.get('/signup', function (req, res) {
-    res.render('new-account');
+    res.render('new_account');
   });
+
   
   // // Loads personal view after login
   // app.get('/personal', isLoggedIn, function(req, res) {
@@ -43,6 +31,7 @@ module.exports = function (app) {
 
   app.get("/wishlist/search",function(req,res){
     res.render('search');
+
   })
 
   //need a route for the wishlist. probably looks like "/wishlists/:id"
@@ -56,14 +45,15 @@ module.exports = function (app) {
             var comments = result;
             db.users.findAll({where:{id:wishlist[0].dataValues.creatorID}}).then(function(result){
               let creatorName=result[0].uname;
-              
                   let allItems = new Array()
             items.forEach(element => {
               allItems.push(element.dataValues);
             });
             let allComments = new Array()
             comments.forEach(element => {
+
               console.log("-----------------"+JSON.stringify(result))
+
               db.users.findAll({where:{id:element.dataValues.poster}}).then(function(result){ pname = result[0].uname
                           let com = {id:element.dataValues.id,
                          msg:element.dataValues.msg,
@@ -82,22 +72,16 @@ module.exports = function (app) {
             creatorName:creatorName
              }
             res.render('wishlist',obj);
-
             })
-        
-            
-   
           })
         })
     })
-    
-    
   });
+  
   // Render 404 page for any unmatched routes
   app.get("*", function (req, res) {
     res.render("404");
   });
-
 
   //need main page "/" route to display homepage
   // app.get('/', function (req, res) {
@@ -108,7 +92,4 @@ module.exports = function (app) {
   // app.get('/wishlists', function (req, res) {
   //   res.render('wishlists');
   // });
-
-
-
 };
