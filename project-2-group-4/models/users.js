@@ -1,8 +1,25 @@
 module.exports = function(sequelize, DataTypes) {
     var users = sequelize.define("users", {
-      uname: DataTypes.STRING,
-      pw: DataTypes.TEXT,
-      email:DataTypes.TEXT
+      indexes: [
+        {
+          unique: true,
+          fields: ['uname']
+        }
+      ],
+      uname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [5, 25]
+        }
+      },
+      pw: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          len: [8, 50]
+        }
+      }
     });
     return users;
   };
