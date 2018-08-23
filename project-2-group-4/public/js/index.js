@@ -12,9 +12,24 @@ var API = {
           $.get("/api/wishlists/" + id).then(function (result) { resolve(result) })
         })
       },
+      byCreatorName: function(name){
+        return new Promise(resolve=> {
+          $.get("/api/user/"+name).then(function(result){
+            id = result.id;
+            $.get("/api/wishlists/"+id).then(function(result){resolve(result)})
+          })
+        })
+      },
       byName: function (name) {
         return new Promise(resolve => {
           $.get("/api/wishlists/" + name).then(function (result) {
+            resolve(result);
+          })
+        })
+      },
+      byWishlistID: function(id){
+        return new Promise(resolve=> {
+          $.get("/api/wishlists/id/"+id).then(function (result){
             resolve(result);
           })
         })
@@ -99,7 +114,7 @@ $(".check").on("click",function(event){
   if(checked==false){
     API.update.check(checked,id,"feature coming soon").then(function(result){console.log(result);location.reload()});
   }
-  if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result)});location.reload()}
+  if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result);location.reload();})}
   
 });
 console.log("loaded")

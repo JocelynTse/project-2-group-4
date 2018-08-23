@@ -67,6 +67,14 @@ module.exports = function (app) {
       res.json(result);
     });
   });
+
+  app.get("/api/user/:name",function(req,res){
+    let name = req.params.name
+    db.users.findAll({where:{_name:name}}).then(function(result){
+      obj={id:result[0].dataValues.id}
+      res.json(obj);
+    })
+  })
   //we need to find a way to make the subscriptions work...
 
   //post route to create a new wishlist
@@ -104,6 +112,7 @@ module.exports = function (app) {
     })
   
     });
+    
  
 
   //put route that will change the checked value from true to false or false to true
