@@ -1,6 +1,6 @@
 <header id="masthead">
     <div class="container">
-        <a href="/" id="logo">
+        <a href="index" id="logo">
             <img src="../public/images/logo.png">
         </a>
         <nav>
@@ -25,30 +25,10 @@
                 <label for="member">Member name</label>
                 <input type="text" class="form-control" id="member">
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button id="searchbycreator"class="btn btn-primary">Search</button>
         </form>
     </div>
 </div>
+<div id="wishlists">
 
-<div class="card-body">
-    <div class="container">
-        <h4 class="card-header" id="memberList">{{ this.CreatorID }}'s Wishists</h5>
-            <div class="col-md-6 text-center" class="tableList">
-                <div class="row">
-                    {{#each wishlist}}
-                    <div class="col-md-9 text-center">
-                        <pre>{{this._name}}
-					</pre>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <form id="subscribe">
-                            <input input type="hidden" type="text" value={{this.id}}>
-                            <br>
-                            <button type="submit" class="btn btn-default">Subscribe!</button>
-                        </form>
-                    </div>
-                    {{/each}}
-                </div>
-            </div>
-    </div>
 </div>
