@@ -108,24 +108,29 @@ module.exports = function (app) {
 
   //put route that will change the checked value from true to false or false to true
   app.put("/api/items", function (req, res) {
-    if (req.body.checked == true) {
+    console.log("-------------------------------")
+    console.log(req.body)
+    console.log("----------------------------")
+    if (req.body.checked == 'true') {
       db.items.update(
-        { checked: req.body.checked,
+        { checked: false,
           checked_by: req.body.checked_by },
-        { where: req.params.id }
+        { where: {id: req.body.id} }
       )
         .then(function (result) {
           res.json(result);
+          
         });
     }
     else {
       db.items.update(
-        { checked: req.body.checked,
+        { checked: true,
           checked_by: null },
-        { where: req.params.id }
+        { where: {id:req.body.id} }
       )
         .then(function (result) {
           res.json(result);
+         
         });
     }
   });
