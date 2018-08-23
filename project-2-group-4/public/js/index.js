@@ -70,7 +70,9 @@ var API = {
   update: {
     check: function (checked, id, checked_by) {
       return new Promise(resolve => {
-        $.update("/api/items", { id: id, checked: checked, checked_by: checked_by })
+        obj = { id: id, checked: checked, checked_by: checked_by }
+        console.log(obj)
+        $.ajax({url:"/api/items", type:"PUT", data:obj,dataType:'json'})
           .then(function (result) { resolve(result); })
       })
 
@@ -87,8 +89,17 @@ var API = {
   }
 }
 
+// click events and logic for wishlist page
 
-
-
-
-
+$(".check").on("click",function(event){
+  id=$(this).attr('data-id');
+  console.log(id)
+  checked=$(this).attr('data-checked');
+  console.log(checked)
+  if(checked==false){
+    API.update.check(checked,id,"feature coming soon").then(function(result){console.log(result);location.reload()});
+  }
+  if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result)});location.reload()}
+  
+});
+console.log("loaded")

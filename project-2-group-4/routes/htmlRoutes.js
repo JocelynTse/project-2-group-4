@@ -40,6 +40,14 @@ module.exports = function (app) {
   //   res.redirect('/');
   // }
  
+
+
+
+  app.get("/wishlists/seachall",function(req,res){
+    res.render('search')
+  })
+
+
   //need a route for the wishlist. probably looks like "/wishlists/:id"
   app.get("/wishlist/:id", function (req, res) {
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){
@@ -68,13 +76,8 @@ module.exports = function (app) {
                          posterName:pname}
 
                           allComments.push(com);
-              
               })
-  
-
             });
-
-  
             var obj = {
             wishlist:wishlist[0].dataValues,
             comments:allComments,
