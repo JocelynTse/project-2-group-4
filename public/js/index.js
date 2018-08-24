@@ -63,7 +63,41 @@ var API = {
           })
         })
       }
+    },
+    subscriptions:{
+      bySubscriberID: function(userid){
+        return new Promise(resolve => {
+          $.get("/api/subscriptions/"+userid).then(function(result){
+            
+            resolve(result);
+          })
+        })
+      },
+      isSubscribed:function(userID,wishlistID){
+        return new Promise(resolve=>{
+          $.get("/api/subscriptions/"+userID).then(function(result){
+            
+            if(result.length==0){
+              resolve({bool:false})
+            }else{
+
+            let bool = false;
+            let subscription = 0;
+
+            result.forEach(element => {
+              if(wishlistID==element.wishlistID){
+                bool=true;
+                subscription=element.id;
+              }
+              resolve({bool:bool,id:subscription});
+            
+            });
+          }
+          })
+        })
+      }
     }
+    
 
   },
   create: {
@@ -96,6 +130,14 @@ var API = {
       })
   
       })
+    },
+    subscription: function(userID,wishlistID){
+      return new Promise(resolve=>{
+        let obj = {userID:userID,wishlistID:wishlistID};
+        $.post("/api/subscriptions",obj).then(function(result){
+          resolve(result);
+        })
+      })
     }
   },
   update: {
@@ -123,6 +165,13 @@ var API = {
       return new Promise(resolve=>{
         let obj = {id:id}
         $.ajax({url:"/api/comment",type:"DELETE",data:obj,dataType:'json'})
+        .then(function(result){resolve(result) })
+      })
+    },
+    subscription:function(id){
+      return new Promise(resolve=>{
+        let obj = {id:id}
+        $.ajax({url:"/api/unsubscribe",type:"DELETE",data:obj,dataType:'json'})
         .then(function(result){resolve(result) })
       })
     }

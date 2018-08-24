@@ -132,6 +132,13 @@ module.exports = function (app) {
         })
     })
   });
+
+  app.get("/wishlists/subscriptions",function(req,res){
+      
+      res.render('subscriptions');
+  })
+
+
   
   // Render 404 page for any unmatched routes
   app.get("*", function (req, res) {

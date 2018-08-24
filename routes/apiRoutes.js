@@ -1,27 +1,30 @@
 var db = require("../models");
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+
+
 module.exports = function (app) {
-  // Get all examples
-  app.get("/api/examples", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
-      res.json(dbExamples);
-    });
-  });
+  // // Get all examples
+  // app.get("/api/examples", function (req, res) {
+  //   db.Example.findAll({}).then(function (dbExamples) {
+  //     res.json(dbExamples);
+  //   });
+  // });
 
-  // Create a new example
-  app.post("/api/examples", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // // Create a new example
+  // app.post("/api/examples", function (req, res) {
+  //   db.Example.create(req.body).then(function (dbExample) {
+  //     res.json(dbExample);
+  //   });
+  // });
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // // Delete an example by id
+  // app.delete("/api/examples/:id", function (req, res) {
+  //   db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
+  //     res.json(dbExample);
+  //   });
+  // });
   //=================our code starts here==================================================================================================================
   //get route to grab all the wishlist names
   app.get("/api/wishlists", function (req, res) {
@@ -122,8 +125,8 @@ module.exports = function (app) {
           to: req.body.email,
           from: 'welcome@wishlistproject.com',
           subject: 'Welcome to wishlist!',
-          text: 'thank you for signing up :)\nyour username:'+req.body.uname,
-          html: '<strong>thank you for signing up :)\nyour username:'+req.body.uname+'</strong>',
+          text: 'thank you for signing up :)  your username: '+req.body.uname,
+          html: '<strong>thank you for signing up :)<hr>your username: '+req.body.uname+'</strong>',
         };
         sgMail.send(msg);
       res.json({result:result,redundantname:false});
@@ -134,13 +137,43 @@ module.exports = function (app) {
   
     });
     
- 
 
+    //need subscription routes
+
+
+    //post route to create new subscription
+    app.post("/api/subscriptions",function(req,res){
+      //pass in userID and wishlistID
+      db.subscriptions.create(req.body).then(function(result){
+          res.json(result);
+      })
+
+    })
+
+    //get route for subscriptions
+    app.get("/api/subscriptions/:userid",function(req,res){
+      db.subscriptions.findAll({where: {userID:req.params.userid}})
+      .then(function(result){
+        
+        res.json(result);
+      })
+    })
+
+    //unsubscribe/delete subscription
+    app.delete("/api/unsubscribe",function(req,res){
+      //pass in subscription id through body
+      db.subscriptions.destroy({where:{id:req.body.id}})
+      .then(function(result){
+        res.json(result);
+      })
+    })
+  
+
+
+  //----------=============------------------===================
   //put route that will change the checked value from true to false or false to true
   app.put("/api/items", function (req, res) {
-    console.log("-------------------------------")
-    console.log(req.body)
-    console.log("----------------------------")
+
     if (req.body.checked == 'true') {
       db.items.update(
         { checked: false,

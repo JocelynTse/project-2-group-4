@@ -9,7 +9,7 @@
                 <p> {{wishlist._name}}</p><hr>
                 <p>created by: {{creatorName}}</p><hr>
                 <li class="nav-item">
-                    <a class="nav-link" href="/wishlist/search">Search for members</a>
+                    <a class="nav-link" href="/wishlist/search">Search by user</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/wishlist/new_list">Create a new list</a>
@@ -18,13 +18,16 @@
                     <a class="nav-link" href="/wishlist/yourlists">View your lists</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/wishlists/subscriptions">View your subscriptions</a>
+                </li>
+                <li class="nav-item">
                     <a id="logOut" class="nav-link" href="#">log out</a>
                 </li>
             </ul>
         </nav>
     </div>
 </header>
-
+<button id="subscribe"></button>
 <div id="list">
     <div>
         <h3>unchecked</h3>
@@ -65,6 +68,38 @@
 <script>
     // click events and logic for wishlist page
 
+
+function subButton(){
+    API.get.subscriptions.isSubscribed(localStorage.id,$("#metadata").attr("data"))
+    .then(function(result){
+        console.log(result)
+    if(result.bool)
+    {$("#subscribe").text("unsubscribe");
+        $("#subscribe").on("click",function(event){
+            API.delete.subscription(result.id)
+            .then(function(result){
+                console.log(result)
+                location.reload();
+            })
+        })
+    
+    }else{$("#subscribe").text("subscribe")
+        $("#subscribe").on("click",function(event){
+            API.create.subscription(localStorage.id,parseInt($("#metadata").attr("data")))
+            .then(function(result){
+                console.log("asdfsfd")
+                console.log(result)
+                location.reload();
+            })
+        })
+    
+    }
+    })
+
+}
+
+subButton();
+
 $(".check").on("click", function (event) {
   id = $(this).attr('data-id');
   console.log(id)
@@ -88,7 +123,7 @@ $("#submitItem").on("click", function (event) {
   });
 });
 
-$("#submitComment").on("click",function(result){
+$("#submitComment").on("click",function(event){
     console.log("affasfd")
     let msg = $("#input-comment").val().trim();
     let id = localStorage.id;
