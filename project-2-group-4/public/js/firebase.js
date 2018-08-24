@@ -53,10 +53,18 @@ $("#submitLogIn").on("click", function (event) {
     })
 });
 
+//Handle Account Status
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        console.log(user)
+        // window.location = '/'; // Redirect if logged in
+        window.user = user;
+    }
+});
+
 $("#logOut").on("click", function (event) {
     event.preventDefault();
-    firebase.auth().signOut().then(function () {
-    }).catch(function (error) {
+    firebase.auth().signOut().then(function () {}).catch(function (error) {
         console.log(error.message);
     });
 });
