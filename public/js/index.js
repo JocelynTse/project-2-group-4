@@ -113,9 +113,18 @@ var API = {
   delete: {
     item: function (id) {
       return new Promise(resolve => {
-        $.delete("/api/items/" + id).then(function (result) { resolve(result) })
+        let obj = {id:id}
+        $.ajax({url:"/api/items",type:"DELETE",data:obj,dataType:'json'})
+        .then(function (result) { resolve(result) })
       })
 
+    },
+    comment:function(id){
+      return new Promise(resolve=>{
+        let obj = {id:id}
+        $.ajax({url:"/api/comment",type:"DELETE",data:obj,dataType:'json'})
+        .then(function(result){resolve(result) })
+      })
     }
   }
 }

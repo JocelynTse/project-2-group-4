@@ -35,5 +35,9 @@
       $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
 
     });
+    $(".wishlistButton").on("click",function(event){
+      let id=$(this).attr("data-id");
+      window.location.href = "/wishlist/admin/"+id
+    })
  });
 </script>

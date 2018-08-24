@@ -168,9 +168,16 @@ module.exports = function (app) {
   //optional(not mvp): put route to change a users password
 
   //delete route to delete an item from a wishlist
-  app.delete("/api/items/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (db) {
-      res.json(db);
+  app.delete("/api/items", function (req, res) {
+    db.items.destroy({ where: { id: req.body.id } }).then(function (result) {
+      res.json(result);
     });
   });
+
+
+  app.delete("/api/comment",function(req,res){
+    db.comments.destroy({where: { id: req.body.id} }).then(function(result){
+      res.json(result);
+    })
+  })
 };
