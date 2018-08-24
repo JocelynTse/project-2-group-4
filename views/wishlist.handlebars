@@ -12,10 +12,10 @@
                     <a class="nav-link" href="/wishlist/search">Search for members</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Create a new list</a>
+                    <a class="nav-link" href="/wishlist/new_list">Create a new list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">View your lists</a>
+                    <a class="nav-link" href="/wishlist/yourlists">View your lists</a>
                 </li>
             </ul>
         </nav>
@@ -84,5 +84,16 @@ $("#submitItem").on("click", function (event) {
   });
 });
 
-
+$("#submitComment").on("click",function(result){
+    console.log("affasfd")
+    let msg = $("#input-comment").val().trim();
+    let id = localStorage.id;
+    let url = window.location.href;
+    url = url.split('/');
+    let wlid = url.pop();
+    API.create.comment(msg,id,wlid).then(function(result){
+        console.log("result");
+        location.reload();
+    })
+})
 </script>

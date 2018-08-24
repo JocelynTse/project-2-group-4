@@ -8,7 +8,7 @@ var API = {
       },
       byCreatorID: function (id) {
         return new Promise(resolve => {
-          $.get("/api/wishlists/" + id).then(function (result) { resolve(result) })
+          $.get("/api/wishlists/byCreator/" + id).then(function (result) { resolve(result) })
         })
       },
       byCreatorName: function(name){
@@ -89,9 +89,12 @@ var API = {
       })
     },
     comment: function (message, poster, wishlistId) {
-      let obj = { msg: message, poster: poster, wishlistID: wishlistId }
+      return new Promise(resolve=>{
+        let obj = { msg: message, poster: poster, wishlistID: wishlistId }
       $.post("/api/comments", obj).then(function (result) {
         resolve(result);
+      })
+  
       })
     }
   },
@@ -119,46 +122,46 @@ var API = {
 
 // click events and logic for wishlist page
 
-$(".check").on("click", function (event) {
-  id = $(this).attr('data-id');
-  console.log(id)
-  checked = $(this).attr('data-checked');
-  console.log(checked)
-  if (checked == false) {
-    API.update.check(checked, id, "feature coming soon").then(function (result) { console.log(result); location.reload() });
-  }
-  if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result);location.reload();})}
+// $(".check").on("click", function (event) {
+//   id = $(this).attr('data-id');
+//   console.log(id)
+//   checked = $(this).attr('data-checked');
+//   console.log(checked)
+//   if (checked == false) {
+//     API.update.check(checked, id, "feature coming soon").then(function (result) { console.log(result); location.reload() });
+//   }
+//   if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result);location.reload();})}
   
-});
-console.log("loaded")
+// });
+// console.log("loaded")
 
-$("#submitItem").on("click", function (event) {
-  let name = $("#input-item").val();
-  url = window.location.href;
-  url = url.split('/');
-  id = url.pop();
-  API.create.item(name, id).then(function (result) {
-    location.reload();
-  });
-});
+// $("#submitItem").on("click", function (event) {
+//   let name = $("#input-item").val();
+//   url = window.location.href;
+//   url = url.split('/');
+//   id = url.pop();
+//   API.create.item(name, id).then(function (result) {
+//     location.reload();
+//   });
+// });
 
 
 
-//search page
+// //search page
 
-$("#searchbycreator").on("click",function(event){
-  event.preventDefault();
-  let creatorname = $("#member").val();
-  API.get.wishlists.byCreatorName(creatorname).then(function(result){
-    console.log(result)
-    $("#wishlists").empty();
-    result.forEach(element => {
-      $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
+// $("#searchbycreator").on("click",function(event){
+//   event.preventDefault();
+//   let creatorname = $("#member").val();
+//   API.get.wishlists.byCreatorName(creatorname).then(function(result){
+//     console.log(result)
+//     $("#wishlists").empty();
+//     result.forEach(element => {
+//       $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
 
-    });
-    $(".wishlistButton").on("click",function(event){
-      let id=$(this).attr("data-id");
-      window.location.href = "/wishlist/"+id
-    })
-  })
-})
+//     });
+//     $(".wishlistButton").on("click",function(event){
+//       let id=$(this).attr("data-id");
+//       window.location.href = "/wishlist/"+id
+//     })
+//   })
+// })

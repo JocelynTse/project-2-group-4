@@ -16,6 +16,9 @@ module.exports = function (app) {
     res.render('new_account');
   });
 
+  app.get('/wishlist/yourlists',function(req,res){
+    res.render("your_lists");
+  })
   
   // // Loads personal view after login
   // app.get('/personal', isLoggedIn, function(req, res) {
