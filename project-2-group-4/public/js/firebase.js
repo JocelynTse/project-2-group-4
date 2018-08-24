@@ -56,7 +56,7 @@ $("#submitLogIn").on("click", function (event) {
 //Handle Account Status
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-        console.log(user)
+        console.log(firebase.auth().currentUser)
         // window.location = '/'; // Redirect if logged in
         window.user = user;
     }
