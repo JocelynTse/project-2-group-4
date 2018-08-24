@@ -72,10 +72,10 @@ var API = {
       })
 
     },
-    user: function (name, password) {
-      let obj = { _name: name, pw: password }
+    user: function (name, email) {
+      let obj = { _name: name, email: email }
       return new Promise(resolve => {
-        let obj = { uname: name, pw: password }
+        let obj = { uname: name, email: email }
         $.post("/api/users", obj).then(function (result) { resolve(result) })
       })
     },
