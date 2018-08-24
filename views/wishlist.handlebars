@@ -1,4 +1,5 @@
 <header id="masthead">
+    <style>.checkedOff {text-decoration: line-through;}</style>
     <div class="container">
         <a href="/" id="logo">
             <img src="/images/logo.png">
@@ -30,11 +31,11 @@
 <button id="subscribe"></button>
 <div id="list">
     <div>
-        <h3>unchecked</h3>
+        {{!-- <h3>unchecked</h3> --}}
         {{#each items}} {{#unless checked}} {{>lists-block checked=false}} {{/unless}} {{/each}}
     </div>
     <div>
-        <h3>checked</h3>
+        {{!-- <h3>checked</h3> --}}
         {{#each items}} {{#if checked}} {{>lists-block checked=true}} {{/if}} {{/each}}
     {{!-- </div>
     commenting before deleting :)

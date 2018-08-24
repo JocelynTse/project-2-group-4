@@ -1,7 +1,12 @@
 <li>
-	{{_name}}
+	{{#if checked}}<div class="checkedOff">{{_name}}</div>
 	<button class="check" data-id="{{id}}" data-checked="{{checked}}" data-checked_by="{{checked_by}}">
-		{{#if checked}}*uncheck*grab checked by from data-checked_by{{else}}*check*{{/if}}
+		*uncheck*
 	</button>
+	{{else}}
+	<div class="need">{{_name}}</div>
+	<button class="check" data-id="{{id}}" data-checked="{{checked}}" data-checked_by="{{checked_by}}">
+		*check*</button>
+	{{/if}}
 </li>
 
