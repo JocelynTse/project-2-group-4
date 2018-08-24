@@ -32,3 +32,23 @@
 <div id="wishlists">
 
 </div>
+
+<script>
+    $("#searchbycreator").on("click",function(event){
+  event.preventDefault();
+  let creatorname = $("#member").val();
+  API.get.wishlists.byCreatorName(creatorname).then(function(result){
+    console.log(result)
+    $("#wishlists").empty();
+    result.forEach(element => {
+      $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
+
+    });
+    $(".wishlistButton").on("click",function(event){
+      let id=$(this).attr("data-id");
+      window.location.href = "/wishlist/"+id
+    })
+  })
+})
+
+</script>

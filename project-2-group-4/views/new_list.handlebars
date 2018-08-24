@@ -35,17 +35,18 @@
                 <br>
                 <input type="radio" name="state" value="1"> Public
             </div>
-            <button id="makeWsihlist" class="btn btn-primary">Create list</button>
+            <button id="makeWishlist" class="btn btn-primary">Create list</button>
         </form>
     </div>
 </div>
 <script>
     $("#loggeduser").html("welcome "+localStorage['uname']);
     $("#makeWishlist").on("click",function(event){
-        let wishlistname = $("#wishlist_name_input").val().trim();
-        API.create.wishlist(wishlistname,localStorage['id',true]).then(function(result){
+        let wishlistname = $("#wishlist_name_input").val()
+        
+        API.create.wishlist(wishlistname,localStorage['id'],true).then(function(result){
             console.log(result)
-            //window.location.href = 'wishlist/'+id;
+            window.location.href = '/wishlist/'+result.id;
         })
     })
 </script>
