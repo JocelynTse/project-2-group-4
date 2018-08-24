@@ -18,6 +18,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/wishlist/yourlists">View your lists</a>
                 </li>
+                <li class="nav-item">
+                    <a id="logOut" class="nav-link" href="#">log out</a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -119,4 +122,11 @@ $("#submitComment").on("click",function(result){
         location.reload();
     })
 })
+
+$("#logOut").on("click", function (event) {
+    event.preventDefault();
+    firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
+        console.log(error.message);
+    });
+});
 </script>
