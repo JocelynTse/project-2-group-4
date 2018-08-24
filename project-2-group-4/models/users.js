@@ -7,13 +7,7 @@ module.exports = function(sequelize, DataTypes) {
           len: [5, 25]
         }
       },
-      pw: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-          len: [8, 50]
-        }
-      },
+
       email:{
         type: DataTypes.TEXT,
         allowNull:false,

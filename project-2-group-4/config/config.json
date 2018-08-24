@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Heyma123!",
+    "password": "",
     "database": "wishlist_modelone",
     "host": "localhost",
     "dialect": "mysql"
