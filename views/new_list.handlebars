@@ -15,6 +15,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/wishlist/yourlists">View your lists</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/wishlists/subscriptions">View your subscriptions</a>
+                </li>
+                <li class="nav-item">
+                    <a id="logOut" class="nav-link" href="#">log out</a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -29,7 +35,7 @@
                 <input type="text" id="wishlist_name_input" class="form-control" id="wishlist" aria-describedby="usernameHelp">
             </div>
             <div class="form-group">
-                <label for="item">List Privacy:</label>
+                <label for="item">List Privacy:*coming soon*</label>
                 <br>
                 <input type="radio" name="state" value="0" checked> Private
                 <br>
@@ -49,4 +55,12 @@
             window.location.href = '/wishlist/'+result.id;
         })
     })
+
+
+    $("#logOut").on("click", function (event) {
+    event.preventDefault();
+    firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
+        console.log(error.message);
+    });
+});
 </script>

@@ -63,7 +63,41 @@ var API = {
           })
         })
       }
+    },
+    subscriptions:{
+      bySubscriberID: function(userid){
+        return new Promise(resolve => {
+          $.get("/api/subscriptions/"+userid).then(function(result){
+            
+            resolve(result);
+          })
+        })
+      },
+      isSubscribed:function(userID,wishlistID){
+        return new Promise(resolve=>{
+          $.get("/api/subscriptions/"+userID).then(function(result){
+            
+            if(result.length==0){
+              resolve({bool:false})
+            }else{
+
+            let bool = false;
+            let subscription = 0;
+
+            result.forEach(element => {
+              if(wishlistID==element.wishlistID){
+                bool=true;
+                subscription=element.id;
+              }
+              resolve({bool:bool,id:subscription});
+            
+            });
+          }
+          })
+        })
+      }
     }
+    
 
   },
   create: {
@@ -96,6 +130,14 @@ var API = {
       })
   
       })
+    },
+    subscription: function(userID,wishlistID){
+      return new Promise(resolve=>{
+        let obj = {userID:userID,wishlistID:wishlistID};
+        $.post("/api/subscriptions",obj).then(function(result){
+          resolve(result);
+        })
+      })
     }
   },
   update: {
@@ -113,55 +155,26 @@ var API = {
   delete: {
     item: function (id) {
       return new Promise(resolve => {
-        $.delete("/api/items/" + id).then(function (result) { resolve(result) })
+        let obj = {id:id}
+        $.ajax({url:"/api/items",type:"DELETE",data:obj,dataType:'json'})
+        .then(function (result) { resolve(result) })
       })
 
+    },
+    comment:function(id){
+      return new Promise(resolve=>{
+        let obj = {id:id}
+        $.ajax({url:"/api/comment",type:"DELETE",data:obj,dataType:'json'})
+        .then(function(result){resolve(result) })
+      })
+    },
+    subscription:function(id){
+      return new Promise(resolve=>{
+        let obj = {id:id}
+        $.ajax({url:"/api/unsubscribe",type:"DELETE",data:obj,dataType:'json'})
+        .then(function(result){resolve(result) })
+      })
     }
   }
 }
 
-// click events and logic for wishlist page
-
-// $(".check").on("click", function (event) {
-//   id = $(this).attr('data-id');
-//   console.log(id)
-//   checked = $(this).attr('data-checked');
-//   console.log(checked)
-//   if (checked == false) {
-//     API.update.check(checked, id, "feature coming soon").then(function (result) { console.log(result); location.reload() });
-//   }
-//   if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result);location.reload();})}
-  
-// });
-// console.log("loaded")
-
-// $("#submitItem").on("click", function (event) {
-//   let name = $("#input-item").val();
-//   url = window.location.href;
-//   url = url.split('/');
-//   id = url.pop();
-//   API.create.item(name, id).then(function (result) {
-//     location.reload();
-//   });
-// });
-
-
-
-// //search page
-
-// $("#searchbycreator").on("click",function(event){
-//   event.preventDefault();
-//   let creatorname = $("#member").val();
-//   API.get.wishlists.byCreatorName(creatorname).then(function(result){
-//     console.log(result)
-//     $("#wishlists").empty();
-//     result.forEach(element => {
-//       $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
-
-//     });
-//     $(".wishlistButton").on("click",function(event){
-//       let id=$(this).attr("data-id");
-//       window.location.href = "/wishlist/"+id
-//     })
-//   })
-// })

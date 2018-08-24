@@ -53,7 +53,7 @@ $("#submitLogIn").on("click", function (event) {
     sessionStorage.setItem("email", email);
 
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-        console.log(error.message);
+        alert(error.message);
     })
 });
 

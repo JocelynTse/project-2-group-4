@@ -74,7 +74,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 $("#logOut").on("click", function (event) {
     event.preventDefault();
-    firebase.auth().signOut().then(function () {}).catch(function (error) {
+    firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
         console.log(error.message);
     });
 });

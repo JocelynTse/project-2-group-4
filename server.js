@@ -3,6 +3,11 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
 
+//sendgrid mail api... may use something else in the future.
+//moved to apiroutes.js
+// const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 var db = require("./models");
 
 var app = express();

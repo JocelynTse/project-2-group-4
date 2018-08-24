@@ -46,7 +46,7 @@ $("#submitNewUser").on("click", function (event) {
     var email = $("#email").val().trim();
     console.log(username);
     console.log(email);
-    console.log(pass);
+    //console.log(pass);
     // Clear sessionStorage
     sessionStorage.clear();
     // Store all content into sessionStorage
@@ -55,9 +55,12 @@ $("#submitNewUser").on("click", function (event) {
 
     firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(user){
         console.log(user);
-        API.create.user(username,email).then(function(result){console.log(result)})
+        API.create.user(username,email).then(function(result){console.log(result)
+        if(result.redundantname){alert("a user with that name already exists :(")}
+        })
+        
     }).catch(function (error) {
-        console.log(error.message);
+        alert(error.message);
     });
 })
 

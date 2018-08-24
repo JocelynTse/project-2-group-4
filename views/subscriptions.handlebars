@@ -5,7 +5,7 @@
         </a>
         <nav>
             <ul class="nav justify-content-end">
-                <p>Welcome {{this.uname}}</p>
+                <p>Welcome {{uname}}</p>
                 <li class="nav-item">
                     <a class="nav-link" href="/wishlist/search">Search by user</a>
                 </li>
@@ -25,47 +25,48 @@
         </nav>
     </div>
 </header>
-
 <div class="card">
-    <h5 class="card-header">Search for members</h5>
-    <div class="card-body">
-        <form action="" method="GET">
-            <div class="form-group">
-                <label for="member">Member name</label>
-                <input type="text" class="form-control" id="member">
-            </div>
-            <button id="searchbycreator"class="btn btn-primary">Search</button>
-        </form>
-    </div>
+    <h5 class="card-header">Lists you are subscribed to</h5>
+
 </div>
 <div id="wishlists">
 
 </div>
 
 <script>
-    $("#searchbycreator").on("click",function(event){
-  event.preventDefault();
-  let creatorname = $("#member").val();
-  API.get.wishlists.byCreatorName(creatorname).then(function(result){
-    console.log(result)
+
+    console.log(localStorage.id)
+    API.get.subscriptions.bySubscriberID(parseInt(localStorage.id)).then(function(subs){
+        console.log(subs)
+
     $("#wishlists").empty();
-    result.forEach(element => {
-      $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
-
-    });
-    $(".wishlistButton").on("click",function(event){
+    subs.forEach(element => {
+        console.log(element)
+        API.get.wishlists.byWishlistID(element.wishlistID).then(function(result){
+            console.log(result)
+            $("#wishlists").append("<button class='wishlistButton' data-id='"+result[0].id+"'>"+result[0]._name+"</button> ");
+        
+        $(".wishlistButton").on("click",function(event){
+        console.log("testoooo");
       let id=$(this).attr("data-id");
-      window.location.href = "/wishlist/"+id
+      window.location.href = "/wishlist/"+id;
+    });
+        })
+
+
     })
-  })
-})
+ });
 
-
-$("#logOut").on("click", function (event) {
+ $("#logOut").on("click", function (event) {
     event.preventDefault();
     firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
         console.log(error.message);
     });
 });
+
+
+
+
+
 
 </script>
