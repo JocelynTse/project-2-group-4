@@ -3,12 +3,13 @@
         <a href="/" id="logo">
             <img src="../public/images/logo.png">
         </a>
+        <div id="metadata" data="{{wishlist.id}}"></div>
         <nav>
             <ul class="nav justify-content-end">
                 <p> {{wishlist._name}}</p><hr>
                 <p>created by: {{creatorName}}</p><hr>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Search for members</a>
+                    <a class="nav-link" href="/wishlist/search">Search for members</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Create a new list</a>
@@ -32,12 +33,15 @@
     </div>
     <br>
     <hr>
+    <h3>add item</h3>
     <br>
+
     <input id="input-item" type="text">
     </input>
     <br><br>
     <button id="submitItem">Submit</button>
 </div>
+<hr>
 
 <div id="comments">
     <div>

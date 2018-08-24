@@ -16,8 +16,22 @@ module.exports = function (app) {
     res.render('new_account');
   });
 
-  app.get("/wishlists/seachall",function(req,res){
-    res.render('search')
+  
+  // // Loads personal view after login
+  // app.get('/personal', isLoggedIn, function(req, res) {
+  //   res.render('personalview')
+  // });
+  // Confirms logged in to proceed to next page
+  // function LoggedIn(req, res, next) {
+  //   if (req.isAuthenticated())
+  //   return next();
+  //   res.redirect('/');
+  // }
+ 
+
+  app.get("/wishlist/search",function(req,res){
+    res.render('search');
+
   })
 
   //need a route for the wishlist. probably looks like "/wishlists/:id"
@@ -37,6 +51,9 @@ module.exports = function (app) {
             });
             let allComments = new Array()
             comments.forEach(element => {
+
+              console.log("-----------------"+JSON.stringify(result))
+
               db.users.findAll({where:{id:element.dataValues.poster}}).then(function(result){ pname = result[0].uname
                           let com = {id:element.dataValues.id,
                          msg:element.dataValues.msg,
