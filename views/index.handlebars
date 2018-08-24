@@ -31,4 +31,21 @@
     </div>
   </div>
 
-  <script src="/js/index.js"></script>
+<script>
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        API.get.user.byEmail(user.email).then(function(result){
+            console.log(result)
+            temp=result;
+            localStorage.setItem('id',result.result[0].id);
+            localStorage.setItem('uname',result.result[0].uname);
+            localStorage.setItem('email',result.result[0].email);
+        });
+        console.log(firebase.auth().currentUser)
+        window.location = '/wishlist/new_list'; 
+        window.user = user;
+    }
+});
+</script>
+
+  

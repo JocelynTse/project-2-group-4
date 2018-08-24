@@ -79,6 +79,13 @@ module.exports = function (app) {
       res.json({error:true})
     })
   })
+
+  app.get("/api/userbyeamil/:email",function(req,res){
+    let email = req.params.email;
+    db.users.findAll({where:{email:email}}).then(function(result){
+      res.json({result})
+    })
+  })
   //we need to find a way to make the subscriptions work...
 
   //post route to create a new wishlist

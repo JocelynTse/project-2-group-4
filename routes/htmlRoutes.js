@@ -16,6 +16,9 @@ module.exports = function (app) {
     res.render('new_account');
   });
 
+  app.get('/wishlist/yourlists',function(req,res){
+    res.render("your_lists");
+  })
   
   // // Loads personal view after login
   // app.get('/personal', isLoggedIn, function(req, res) {
@@ -32,6 +35,11 @@ module.exports = function (app) {
   app.get("/wishlist/search",function(req,res){
     res.render('search');
 
+  })
+
+
+  app.get("/wishlist/new_list",function(req,res){
+    res.render('new_list');
   })
 
   //need a route for the wishlist. probably looks like "/wishlists/:id"
