@@ -7,6 +7,11 @@ module.exports = function(sequelize, DataTypes) {
           len: [1, 50]
         }
         },
+        private:{
+          type: DataTypes.BOOLEAN,
+          allowNull:false,
+          default:false
+        },
       creatorID: DataTypes.INTEGER
     });
     return wishlists;

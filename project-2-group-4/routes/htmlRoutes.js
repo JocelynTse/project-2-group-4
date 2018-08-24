@@ -34,6 +34,11 @@ module.exports = function (app) {
 
   })
 
+
+  app.get("/wishlist/new_list",function(req,res){
+    res.render('new_list');
+  })
+
   //need a route for the wishlist. probably looks like "/wishlists/:id"
   app.get("/wishlist/:id", function (req, res) {
     db.wishlists.findAll({where:{id:req.params.id}}).then(function(result){

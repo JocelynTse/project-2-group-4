@@ -5,7 +5,7 @@
         </a>
         <nav>
             <ul class="nav justify-content-end">
-                <p>Welcome {{ this.uname }}</p>
+                <p id="loggeduser"></p>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Search for members</a>
                 </li>
@@ -26,16 +26,26 @@
         <form action="/api/wishlists" method="POST">
             <div class="form-group">
                 <label for="listName">Name of Wishlist</label>
-                <input type="text" class="form-control" id="wishlist" aria-describedby="usernameHelp">
+                <input type="text" id="wishlist_name_input" class="form-control" id="wishlist" aria-describedby="usernameHelp">
             </div>
             <div class="form-group">
                 <label for="item">List Privacy:</label>
                 <br>
-                <input type="radio" name="private" value="0" checked> Private
+                <input type="radio" name="state" value="0" checked> Private
                 <br>
-                <input type="radio" name="public" value="1"> Public
+                <input type="radio" name="state" value="1"> Public
             </div>
-            <button type="submit" class="btn btn-primary">Create list</button>
+            <button id="makeWsihlist" class="btn btn-primary">Create list</button>
         </form>
     </div>
 </div>
+<script>
+    $("#loggeduser").html("welcome "+localStorage['uname']);
+    $("#makeWishlist").on("click",function(event){
+        let wishlistname = $("#wishlist_name_input").val().trim();
+        API.create.wishlist(wishlistname,localStorage['id',true]).then(function(result){
+            console.log(result)
+            //window.location.href = 'wishlist/'+id;
+        })
+    })
+</script>

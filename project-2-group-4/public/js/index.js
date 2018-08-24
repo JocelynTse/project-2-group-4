@@ -54,12 +54,21 @@ var API = {
           $.get("/api/comments/" + id).then(function (result) { resolve(result) })
         })
       }
+    },
+    user: {
+      byEmail: function(email){
+        return new Promise(resolve => {
+          $.get("/api/userbyeamil/"+email).then(function(result){
+            resolve(result);
+          })
+        })
+      }
     }
 
   },
   create: {
-    wishlist: function (name, creatorId) {
-      let obj = { _name: name, creatorID: creatorId }
+    wishlist: function (name, creatorId,private) {
+      let obj = { _name: name, creatorID: creatorId, private:private }
       return new Promise(resolve => {
         $.post("/api/wishlists", obj).then(function (result) { resolve(result) })
       })
@@ -73,7 +82,7 @@ var API = {
 
     },
     user: function (name, email) {
-      let obj = { _name: name, email: email }
+    console.log('hi');
       return new Promise(resolve => {
         let obj = { uname: name, email: email }
         $.post("/api/users", obj).then(function (result) { resolve(result) })
