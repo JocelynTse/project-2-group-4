@@ -1,5 +1,6 @@
 var db = require("../models");
-
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 module.exports = function (app) {
   // Get all examples
   app.get("/api/examples", function (req, res) {
@@ -117,7 +118,16 @@ module.exports = function (app) {
       if(result.length==0){
              
       db.users.create(req.body).then(function (result) {
+        const msg = {
+          to: req.body.email,
+          from: 'welcome@wishlistproject.com',
+          subject: 'Welcome to wishlist!',
+          text: 'thank you for signing up :)\nyour username:'+req.body.uname,
+          html: '<strong>thank you for signing up :)\nyour username:'+req.body.uname+'</strong>',
+        };
+        sgMail.send(msg);
       res.json({result:result,redundantname:false});
+
       })
     }else{res.json({result:result,redundantname:true})}
     })
