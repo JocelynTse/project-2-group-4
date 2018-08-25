@@ -139,18 +139,18 @@ module.exports = function (app) {
       db.users.findAll({where:{id:req.body.poster}})
       .then(function(poster){
         obj.poster=poster;
-        db.users.findAll({where:{id:wishlist.creatorID}})
+        db.users.findAll({where:{id:wishlist[0].creatorID}})
       .then(function(user){
         obj.user=user;
         console.log("-==================-------------------=================")
         console.log(JSON.stringify(obj))
         console.log("---------------------------------------------------")
         var msg = {
-          to: obj.user.email,
+          to: obj.user[0].email,
           from: 'commentbot@wishlistproject.com',
-          subject: obj.poster.uname+' commented on your wishlist: '+obj.wishlist._name,
-          text: obj.poster.uname+': '+req.body.msg,
-          html: '<p>'+obj.poster.uname+' <hr>'+req.body.msg
+          subject: obj.poster[0].uname+' commented on your wishlist: '+obj.wishlist[0]._name,
+          text: obj.poster[0].uname+': '+req.body.msg,
+          html: '<p>'+obj.poster[0].uname+' <hr>'+req.body.msg
         };
         console.log("-==================-------------------=================")
         console.log(JSON.stringify(msg))
