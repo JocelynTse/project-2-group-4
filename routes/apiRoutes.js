@@ -142,7 +142,9 @@ module.exports = function (app) {
         db.users.findAll({where:{id:wishlist.creatorID}})
       .then(function(user){
         obj.user=user;
-        console.log(obj);
+        console.log("-==================-------------------=================")
+        console.log(JSON.stringify(obj))
+        console.log("---------------------------------------------------")
         var msg = {
           to: obj.user.email,
           from: 'commentbot@wishlistproject.com',
@@ -150,7 +152,9 @@ module.exports = function (app) {
           text: obj.poster.uname+': '+req.body.msg,
           html: '<p>'+obj.poster.uname+' <hr>'+req.body.msg
         };
-        console.log(msg)
+        console.log("-==================-------------------=================")
+        console.log(JSON.stringify(msg))
+        console.log("---------------------------------------------------")
 
         sgMail.send(msg);
     db.comments.create(req.body).then(function (result) {
