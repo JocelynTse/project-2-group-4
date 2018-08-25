@@ -1,6 +1,6 @@
 var db = require("../models");
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+//const sgMail = require('@sendgrid/mail');
+//sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 

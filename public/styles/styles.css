@@ -1,3 +1,25 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+body {
+  background: url("../images/brushed_alu_dark.png");
+  color: #392B1E;
+}
+
+.nav-link {
+  font-size: 18px;
+  color: #D4A68A;
+}
+
+.card-header {
+  background-color: #D4A68A;
+}
+
+.card-body {
+  background-color: #F0EFEE;
+}
+
+.btn {
+  background-color: #7A7A7A;
+}

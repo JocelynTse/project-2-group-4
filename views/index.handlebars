@@ -20,32 +20,62 @@
   <div class="row">
     <div class="col-10 offset-1">
       <div class="card">
+        <h5 class="card-header">Create wishlists for birthdays, registries, fundraisers, and more!</h5>
         <div class="card-body">
-          <h5 class="card-title">Create wishlists for birthdays, registries, fundraisers, and more!</h5>
-          <p class="card-text">Simple and easy-to-use</p>
-          <li class="card-text">Add wishlists to your account.</li>
-          <li class="card-text">Manage your wishlists.</li>
-          <li class="card-text">Subscribe to other members' wishlists.</li>
+          <li class="card-text">Simple and easy-to-use</li>
+          <li class="card-text">Create wishlists for any occasion.</li>
+          <li class="card-text">Vote on items on wishlists.</li>
+          <li class="card-text">Add links to favorite stores.</li>
         </div>
       </div>
     </div>
   </div>
 
-<script>
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        API.get.user.byEmail(user.email).then(function(result){
-            console.log(result)
-            temp=result;
-            localStorage.setItem('id',result.result[0].id);
-            localStorage.setItem('uname',result.result[0].uname);
-            localStorage.setItem('email',result.result[0].email);
+  <br>
+
+  <div class="row">
+    <div class="col-10 offset-1">
+      <div class="card">
+        <h5 class="card-header">Connect to other members</h5>
+        <div class="card-body">
+          <li class="card-text">Search for other members and view their wishlists.</li>
+          <li class="card-text">Subscribe to a member's wishlists.</li>
+          <li class="card-text">Share wishlists with other people.</li>
+          <li class="card-text">Reserve items on wishlists.</li>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-10 offset-1">
+      <div class="card">
+        <h5 class="card-header">Fulfill wishlists!</h5>
+        <div class="card-body">
+          <li class="card-text">Check wishlists and preferences from anywhere.</li>
+          <li class="card-text">View or print a wishist of items.</li>
+          <li class="card-text">But gifts in person, online, or whichever method you prefer.</li>
+          <li class="card-text">Easy gift ideas, no duplicates, no returns.</li>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        API.get.user.byEmail(user.email).then(function (result) {
+          console.log(result)
+          temp = result;
+          localStorage.setItem('id', result.result[0].id);
+          localStorage.setItem('uname', result.result[0].uname);
+          localStorage.setItem('email', result.result[0].email);
         });
         console.log(firebase.auth().currentUser)
-        window.location = '/wishlist/new_list'; 
+        window.location = '/wishlist/new_list';
         window.user = user;
-    }
-});
-</script>
-
-  
+      }
+    });
+  </script>
