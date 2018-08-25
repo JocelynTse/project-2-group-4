@@ -12,8 +12,12 @@ body {
   color: #D4A68A;
 }
 
-.card {
+.card-header {
   background-color: #D4A68A;
+}
+
+.card-body {
+  background-color: #F0EFEE;
 }
 
 .btn {
