@@ -127,6 +127,26 @@ module.exports = function (app) {
   //post route to create a new comment and assign it to a wishlist
   app.post("/api/comments", function (req, res) {
     // console.log(req.body)
+    db.wishlists.findAll({where:{id:req.body.wishlistID}})
+    .then(function(result){
+      db.users.findAll({where:{id:req.body.poster}})
+      .then(function(poster){
+        db.users.findAll({where:{id:result.creatorID}})
+      .then(function(user){
+        const msg = {
+          to: user.email,
+          from: 'commentbot@wishlistproject.com',
+          subject: poster.name+' commented on your wishlist: '+result._name,
+          text: poster.name+': '+req.body.msg,
+          html: '<p>'+poster.name+' <hr>'+req.body.msg,
+        };
+        sgMail.send(msg);
+
+      })
+      })
+   
+    })
+
     db.comments.create(req.body).then(function (result) {
       res.json(result);
     });
@@ -230,7 +250,7 @@ module.exports = function (app) {
     }
   });
 
-  //optional(not mvp): put route to change a users password
+  
 
   //delete route to delete an item from a wishlist
   app.delete("/api/items", function (req, res) {
