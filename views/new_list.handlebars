@@ -46,21 +46,20 @@
     </div>
 </div>
 <script>
-    $("#loggeduser").html("welcome "+localStorage['uname']);
-    $("#makeWishlist").on("click",function(event){
+    $("#loggeduser").html("welcome " + localStorage['uname']);
+    $("#makeWishlist").on("click", function (event) {
         let wishlistname = $("#wishlist_name_input").val()
-        
-        API.create.wishlist(wishlistname,localStorage['id'],true).then(function(result){
+
+        API.create.wishlist(wishlistname, localStorage['id'], true).then(function (result) {
             console.log(result)
-            window.location.href = '/wishlist/'+result.id;
+            window.location.href = '/wishlist/' + result.id;
         })
     })
 
-
     $("#logOut").on("click", function (event) {
-    event.preventDefault();
-    firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
-        console.log(error.message);
+        event.preventDefault();
+        firebase.auth().signOut().then(function () { localStorage.clear(); window.location.href = "/"; }).catch(function (error) {
+            console.log(error.message);
+        });
     });
-});
 </script>

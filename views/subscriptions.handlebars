@@ -36,37 +36,29 @@
 <script>
 
     console.log(localStorage.id)
-    API.get.subscriptions.bySubscriberID(parseInt(localStorage.id)).then(function(subs){
+    API.get.subscriptions.bySubscriberID(parseInt(localStorage.id)).then(function (subs) {
         console.log(subs)
+        $("#wishlists").empty();
+        subs.forEach(element => {
+            console.log(element)
+            API.get.wishlists.byWishlistID(element.wishlistID).then(function (result) {
+                console.log(result)
+                $("#wishlists").append("<button class='wishlistButton' data-id='" + result[0].id + "'>" + result[0]._name + "</button> ");
 
-    $("#wishlists").empty();
-    subs.forEach(element => {
-        console.log(element)
-        API.get.wishlists.byWishlistID(element.wishlistID).then(function(result){
-            console.log(result)
-            $("#wishlists").append("<button class='wishlistButton' data-id='"+result[0].id+"'>"+result[0]._name+"</button> ");
-        
-        $(".wishlistButton").on("click",function(event){
-        console.log("testoooo");
-      let id=$(this).attr("data-id");
-      window.location.href = "/wishlist/"+id;
-    });
+                $(".wishlistButton").on("click", function (event) {
+                    console.log("testoooo");
+                    let id = $(this).attr("data-id");
+                    window.location.href = "/wishlist/" + id;
+                });
+            })
         })
-
-
-    })
- });
-
- $("#logOut").on("click", function (event) {
-    event.preventDefault();
-    firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
-        console.log(error.message);
     });
-});
 
-
-
-
-
+    $("#logOut").on("click", function (event) {
+        event.preventDefault();
+        firebase.auth().signOut().then(function () { localStorage.clear(); window.location.href = "/"; }).catch(function (error) {
+            console.log(error.message);
+        });
+    });
 
 </script>

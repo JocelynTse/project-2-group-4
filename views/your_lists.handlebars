@@ -37,23 +37,23 @@
 <script>
 
     console.log(localStorage.id)
- API.get.wishlists.byCreatorID(parseInt(localStorage.id)).then(function(result){
-    console.log(result)
-    $("#wishlists").empty();
-    result.forEach(element => {
-      $("#wishlists").append("<button class='wishlistButton' data-id='"+element.id+"'>"+element._name+"</button> ");
+    API.get.wishlists.byCreatorID(parseInt(localStorage.id)).then(function (result) {
+        console.log(result)
+        $("#wishlists").empty();
+        result.forEach(element => {
+            $("#wishlists").append("<button class='wishlistButton' data-id='" + element.id + "'>" + element._name + "</button> ");
 
+        });
+        $(".wishlistButton").on("click", function (event) {
+            let id = $(this).attr("data-id");
+            window.location.href = "/wishlist/admin/" + id
+        })
     });
-    $(".wishlistButton").on("click",function(event){
-      let id=$(this).attr("data-id");
-      window.location.href = "/wishlist/admin/"+id
-    })
- });
 
- $("#logOut").on("click", function (event) {
-    event.preventDefault();
-    firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
-        console.log(error.message);
+    $("#logOut").on("click", function (event) {
+        event.preventDefault();
+        firebase.auth().signOut().then(function () { localStorage.clear(); window.location.href = "/"; }).catch(function (error) {
+            console.log(error.message);
+        });
     });
-});
 </script>
