@@ -20,8 +20,8 @@
   <div class="row">
     <div class="col-10 offset-1">
       <div class="card">
+        <h5 class="card-header">Create wishlists for birthdays, registries, fundraisers, and more!</h5>
         <div class="card-body">
-          <h5 class="card-title">Create wishlists for birthdays, registries, fundraisers, and more!</h5>
           <p class="card-text">Simple and easy-to-use</p>
           <li class="card-text">Add wishlists to your account.</li>
           <li class="card-text">Manage your wishlists.</li>
@@ -31,21 +31,19 @@
     </div>
   </div>
 
-<script>
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        API.get.user.byEmail(user.email).then(function(result){
-            console.log(result)
-            temp=result;
-            localStorage.setItem('id',result.result[0].id);
-            localStorage.setItem('uname',result.result[0].uname);
-            localStorage.setItem('email',result.result[0].email);
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        API.get.user.byEmail(user.email).then(function (result) {
+          console.log(result)
+          temp = result;
+          localStorage.setItem('id', result.result[0].id);
+          localStorage.setItem('uname', result.result[0].uname);
+          localStorage.setItem('email', result.result[0].email);
         });
         console.log(firebase.auth().currentUser)
-        window.location = '/wishlist/new_list'; 
+        window.location = '/wishlist/new_list';
         window.user = user;
-    }
-});
-</script>
-
-  
+      }
+    });
+  </script>
