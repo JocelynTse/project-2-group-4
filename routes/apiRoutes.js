@@ -150,6 +150,7 @@ module.exports = function (app) {
           text: obj.poster.uname+': '+req.body.msg,
           html: '<p>'+obj.poster.uname+' <hr>'+req.body.msg
         };
+        console.log(msg)
 
         sgMail.send(msg);
     db.comments.create(req.body).then(function (result) {
