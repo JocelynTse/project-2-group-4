@@ -200,6 +200,22 @@ var API = {
       })
 
 
+    },
+    privacy: function(wishlistID,bool) {
+      return new Promise(resolve=> {
+        obj={
+          id:wishlistID,
+          private:bool
+        }
+        $.ajax({
+          url:"/api/privacy",
+          type:"PUT",
+          data:obj,
+          dataType:'json'
+        }).then(function(result) {
+          resolve(result);
+        })
+      })
     }
   },
   delete: {

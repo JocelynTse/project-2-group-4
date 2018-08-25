@@ -1,6 +1,6 @@
 var db = require("../models");
-//const sgMail = require('@sendgrid/mail');
-//sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = function (app) {
   app.get("/api/wishlists", function (req, res) {
@@ -80,6 +80,21 @@ module.exports = function (app) {
         error: true
       })
     })
+  })
+
+
+  app.put("/api/privacy",function(req,res){
+   
+    if(req.body.private=='true'){
+          db.wishlists.update({private:true},{where:{id:req.body.id}}).then(function(result){
+      res.json(result);
+    })
+    }else{
+      db.wishlists.update({private:false},{where:{id:req.body.id}}).then(function(result){
+        res.json(result);
+      })
+    }
+
   })
 
   app.get("/api/userbyeamil/:email", function (req, res) {

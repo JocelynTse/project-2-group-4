@@ -50,7 +50,10 @@
             console.log(result)
             $("#wishlists").empty();
             result.forEach(element => {
-                $("#wishlists").append("<button class='wishlistButton' data-id='" + element.id + "'>" + element._name + "</button> ");
+                if(element.private){
+                    $("#wishlists").append("<button class='wishlistButton' data-id='" + element.id + "'>" + element._name + "</button> ");
+                }
+                
             });
             $(".wishlistButton").on("click", function (event) {
                 let id = $(this).attr("data-id");

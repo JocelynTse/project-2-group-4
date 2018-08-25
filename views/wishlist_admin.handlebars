@@ -4,7 +4,7 @@
             <a href="/" id="logo">
                 <img src="/images/logo.png">
             </a>
-            <div id="metadata" data-creator="{{creatorName}}" data="{{wishlist.id}}"></div>
+            <div id="metadata" data-private="{{wishlist.private}}" data-creator="{{creatorName}}" data="{{wishlist.id}}"></div>
             <nav>
                 <ul class="nav justify-content-end">
                     <p> {{wishlist._name}}</p>
@@ -30,7 +30,11 @@
             </nav>
         </div>
     </header>
-
+    <div>
+        <button id="updatePrivacy"></button>
+        <a id="listlink" class="nav-link"></a>
+    </div>
+    
     <div id="list">
         <div>
             <h3>unchecked</h3>
@@ -70,11 +74,29 @@
 <script>
     // click events and logic for wishlist page
     let creatorName = $("#metadata").attr("data-creator");
-
+    let private = $("#metadata").attr("data-private");
+    let id = $("#metadata").attr("data");
     if (creatorName != localStorage.uname) {
         $("#security").empty();
         $("#security").html("<h1>you do not own this wishlist</h1><br><p>only the owner of this wishlist may manipulate data using this page</p>")
     }
+    if(private=="true"){
+        $("#updatePrivacy").text("make private");
+        $("#updatePrivacy").on("click",function(){
+            API.update.privacy(id,'false').then(function(result){
+                location.reload();
+            })
+        })
+    }else{
+        $("#updatePrivacy").text("make public");
+        $("#updatePrivacy").on("click",function(){
+            API.update.privacy(id,'true').then(function(result){
+                location.reload();
+            })
+        })
+    }
+    $("#listlink").attr("href","/wishlist/"+id);
+    $("#listlink").text("link to list: /wishlist/"+id);
 
     $(".check").on("click", function (event) {
         id = $(this).attr('data-id');

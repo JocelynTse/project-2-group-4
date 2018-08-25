@@ -35,24 +35,29 @@
                 <input type="text" id="wishlist_name_input" class="form-control" id="wishlist" aria-describedby="usernameHelp">
             </div>
             <div class="form-group">
-                <label for="item">List Privacy:*coming soon*</label>
+                <label for="item">List Privacy:</label>
                 <br>
-                <input type="radio" name="state" value="0" checked> Private
+                <input class="private" type="radio" name="state" value="0" checked> Private
                 <br>
-                <input type="radio" name="state" value="1"> Public
+                <input class="private" type="radio" name="state" value="1"> Public
             </div>
             <button id="makeWishlist" class="btn btn-primary">Create list</button>
         </form>
     </div>
 </div>
 <script>
+
+    let private = 0;
+    $(".private").on("click",function(){
+        private=parseInt($(this).val());
+    })
     $("#loggeduser").html("welcome " + localStorage['uname']);
     $("#makeWishlist").on("click", function (event) {
         let wishlistname = $("#wishlist_name_input").val()
 
-        API.create.wishlist(wishlistname, localStorage['id'], true).then(function (result) {
+        API.create.wishlist(wishlistname, localStorage['id'], private).then(function (result) {
             console.log(result)
-            window.location.href = '/wishlist/' + result.id;
+            window.location.href = '/wishlist/admin/' + result.id;
         })
     })
 
