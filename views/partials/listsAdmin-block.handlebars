@@ -1,0 +1,8 @@
+<li>
+	{{_name}}
+	<button class="check" data-id="{{id}}" data-checked="{{checked}}" data-checked_by="{{checked_by}}">
+		{{#if checked}}*uncheck*grab checked by from data-checked_by{{else}}*check*{{/if}}
+	</button>
+    <button class="delete_item" data-id="{{id}}">delete item</button>
+</li>
+

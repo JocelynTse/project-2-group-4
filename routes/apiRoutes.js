@@ -1,26 +1,30 @@
 var db = require("../models");
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+
 
 module.exports = function (app) {
-  // Get all examples
-  app.get("/api/examples", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
-      res.json(dbExamples);
-    });
-  });
+  // // Get all examples
+  // app.get("/api/examples", function (req, res) {
+  //   db.Example.findAll({}).then(function (dbExamples) {
+  //     res.json(dbExamples);
+  //   });
+  // });
 
-  // Create a new example
-  app.post("/api/examples", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // // Create a new example
+  // app.post("/api/examples", function (req, res) {
+  //   db.Example.create(req.body).then(function (dbExample) {
+  //     res.json(dbExample);
+  //   });
+  // });
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // // Delete an example by id
+  // app.delete("/api/examples/:id", function (req, res) {
+  //   db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
+  //     res.json(dbExample);
+  //   });
+  // });
   //=================our code starts here==================================================================================================================
   //get route to grab all the wishlist names
   app.get("/api/wishlists", function (req, res) {
@@ -79,6 +83,13 @@ module.exports = function (app) {
       res.json({error:true})
     })
   })
+
+  app.get("/api/userbyeamil/:email",function(req,res){
+    let email = req.params.email;
+    db.users.findAll({where:{email:email}}).then(function(result){
+      res.json({result})
+    })
+  })
   //we need to find a way to make the subscriptions work...
 
   //post route to create a new wishlist
@@ -110,20 +121,59 @@ module.exports = function (app) {
       if(result.length==0){
              
       db.users.create(req.body).then(function (result) {
+        const msg = {
+          to: req.body.email,
+          from: 'welcome@wishlistproject.com',
+          subject: 'Welcome to wishlist!',
+          text: 'thank you for signing up :)  your username: '+req.body.uname,
+          html: '<strong>thank you for signing up :)<hr>your username: '+req.body.uname+'</strong>',
+        };
+        sgMail.send(msg);
       res.json({result:result,redundantname:false});
+
       })
     }else{res.json({result:result,redundantname:true})}
     })
   
     });
     
- 
 
+    //need subscription routes
+
+
+    //post route to create new subscription
+    app.post("/api/subscriptions",function(req,res){
+      //pass in userID and wishlistID
+      db.subscriptions.create(req.body).then(function(result){
+          res.json(result);
+      })
+
+    })
+
+    //get route for subscriptions
+    app.get("/api/subscriptions/:userid",function(req,res){
+      db.subscriptions.findAll({where: {userID:req.params.userid}})
+      .then(function(result){
+        
+        res.json(result);
+      })
+    })
+
+    //unsubscribe/delete subscription
+    app.delete("/api/unsubscribe",function(req,res){
+      //pass in subscription id through body
+      db.subscriptions.destroy({where:{id:req.body.id}})
+      .then(function(result){
+        res.json(result);
+      })
+    })
+  
+
+
+  //----------=============------------------===================
   //put route that will change the checked value from true to false or false to true
   app.put("/api/items", function (req, res) {
-    console.log("-------------------------------")
-    console.log(req.body)
-    console.log("----------------------------")
+
     if (req.body.checked == 'true') {
       db.items.update(
         { checked: false,
@@ -151,9 +201,16 @@ module.exports = function (app) {
   //optional(not mvp): put route to change a users password
 
   //delete route to delete an item from a wishlist
-  app.delete("/api/items/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (db) {
-      res.json(db);
+  app.delete("/api/items", function (req, res) {
+    db.items.destroy({ where: { id: req.body.id } }).then(function (result) {
+      res.json(result);
     });
   });
+
+
+  app.delete("/api/comment",function(req,res){
+    db.comments.destroy({where: { id: req.body.id} }).then(function(result){
+      res.json(result);
+    })
+  })
 };

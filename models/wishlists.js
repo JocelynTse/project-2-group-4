@@ -4,8 +4,13 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          len: [1, 50]
+          len: [1, 250]
         }
+        },
+        private:{
+          type: DataTypes.BOOLEAN,
+          allowNull:false,
+          default:false
         },
       creatorID: DataTypes.INTEGER
     });

@@ -25,28 +25,19 @@
         </nav>
     </div>
 </header>
-
 <div class="card">
-    <h5 class="card-header">Search for members</h5>
-    <div class="card-body">
-        <form action="" method="GET">
-            <div class="form-group">
-                <label for="member">Member name</label>
-                <input type="text" class="form-control" id="member">
-            </div>
-            <button id="searchbycreator"class="btn btn-primary">Search</button>
-        </form>
-    </div>
+    <h5 class="card-header">Your Lists</h5>
+
 </div>
 <div id="wishlists">
 
 </div>
 
+
 <script>
-    $("#searchbycreator").on("click",function(event){
-  event.preventDefault();
-  let creatorname = $("#member").val();
-  API.get.wishlists.byCreatorName(creatorname).then(function(result){
+
+    console.log(localStorage.id)
+ API.get.wishlists.byCreatorID(parseInt(localStorage.id)).then(function(result){
     console.log(result)
     $("#wishlists").empty();
     result.forEach(element => {
@@ -55,17 +46,14 @@
     });
     $(".wishlistButton").on("click",function(event){
       let id=$(this).attr("data-id");
-      window.location.href = "/wishlist/"+id
+      window.location.href = "/wishlist/admin/"+id
     })
-  })
-})
+ });
 
-
-$("#logOut").on("click", function (event) {
+ $("#logOut").on("click", function (event) {
     event.preventDefault();
     firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
         console.log(error.message);
     });
 });
-
 </script>

@@ -1,10 +1,10 @@
+<div id="security">
 <header id="masthead">
-    <style>.checkedOff {text-decoration: line-through;}</style>
     <div class="container">
         <a href="/" id="logo">
             <img src="/images/logo.png">
         </a>
-        <div id="metadata" data="{{wishlist.id}}"></div>
+        <div id="metadata" data-creator="{{creatorName}}" data="{{wishlist.id}}"></div>
         <nav>
             <ul class="nav justify-content-end">
                 <p> {{wishlist._name}}</p><hr>
@@ -28,17 +28,16 @@
         </nav>
     </div>
 </header>
-<button id="subscribe"></button>
+
 <div id="list">
     <div>
-        {{!-- <h3>unchecked</h3> --}}
-        {{#each items}} {{#unless checked}} {{>lists-block checked=false}} {{/unless}} {{/each}}
+        <h3>unchecked</h3>
+        {{#each items}} {{#unless checked}} {{>listsAdmin-block checked=false}} {{/unless}} {{/each}}
     </div>
     <div>
-        {{!-- <h3>checked</h3> --}}
-        {{#each items}} {{#if checked}} {{>lists-block checked=true}} {{/if}} {{/each}}
-    {{!-- </div>
-    commenting before deleting :)
+        <h3>checked</h3>
+        {{#each items}} {{#if checked}} {{>listsAdmin-block checked=true}} {{/if}} {{/each}}
+    </div>
     <br>
     <hr>
     <h3>add item</h3>
@@ -48,13 +47,13 @@
     </input>
     <br><br>
     <button id="submitItem">Submit</button>
-</div> --}}
+</div>
 <hr>
 
 <div id="comments">
     <div>
         <h3>comments</h3>
-        {{#each comments}} {{>comments-block}} {{/each}}
+        {{#each comments}} {{>commentsAdmin-block}} {{/each}}
     </div>
 
 <input id="input-comment" type="text">
@@ -64,42 +63,17 @@
 
 </div>
 
-
+</div>
 
 <script>
     // click events and logic for wishlist page
+let creatorName = $("#metadata").attr("data-creator");
 
-
-function subButton(){
-    API.get.subscriptions.isSubscribed(localStorage.id,$("#metadata").attr("data"))
-    .then(function(result){
-        console.log(result)
-    if(result.bool)
-    {$("#subscribe").text("unsubscribe");
-        $("#subscribe").on("click",function(event){
-            API.delete.subscription(result.id)
-            .then(function(result){
-                console.log(result)
-                location.reload();
-            })
-        })
-    
-    }else{$("#subscribe").text("subscribe")
-        $("#subscribe").on("click",function(event){
-            API.create.subscription(localStorage.id,parseInt($("#metadata").attr("data")))
-            .then(function(result){
-                console.log("asdfsfd")
-                console.log(result)
-                location.reload();
-            })
-        })
-    
-    }
-    })
-
+if(creatorName != localStorage.uname){
+    $("#security").empty();
+    $("#security").html("<h1>you do not own this wishlist</h1><br><p>only the owner of this wishlist may manipulate data using this page</p>")
 }
 
-subButton();
 
 $(".check").on("click", function (event) {
   id = $(this).attr('data-id');
@@ -114,6 +88,22 @@ $(".check").on("click", function (event) {
 });
 console.log("loaded")
 
+$(".delete_item").on("click",function(event){
+    let id = $(this).attr('data-id');
+    API.delete.item(id).then(function(result){
+        console.log(result);
+        location.reload();
+    })
+})
+
+$(".delete_comment").on("click",function(event){
+    let id = $(this).attr('data-id');
+    API.delete.comment(id).then(function(result){
+        console.log(result);
+        location.reload();
+    })
+})
+
 $("#submitItem").on("click", function (event) {
   let name = $("#input-item").val();
   url = window.location.href;
@@ -124,8 +114,7 @@ $("#submitItem").on("click", function (event) {
   });
 });
 
-$("#submitComment").on("click",function(event){
-    console.log("affasfd")
+$("#submitComment").on("click",function(result){
     let msg = $("#input-comment").val().trim();
     let id = localStorage.id;
     let url = window.location.href;
