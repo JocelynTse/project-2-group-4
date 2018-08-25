@@ -127,29 +127,40 @@ module.exports = function (app) {
   //post route to create a new comment and assign it to a wishlist
   app.post("/api/comments", function (req, res) {
     // console.log(req.body)
+    var obj = {
+      wishlist:null,
+      poster:null,
+      user:null,
+
+    }
     db.wishlists.findAll({where:{id:req.body.wishlistID}})
-    .then(function(result){
+    .then(function(wishlist){
+       obj.wishlist =wishlist;
       db.users.findAll({where:{id:req.body.poster}})
       .then(function(poster){
-        db.users.findAll({where:{id:result.creatorID}})
+        obj.poster=poster;
+        db.users.findAll({where:{id:wishlist.creatorID}})
       .then(function(user){
-        const msg = {
-          to: user.email,
+        obj.user=user;
+        console.log(obj);
+        var msg = {
+          to: obj.user.email,
           from: 'commentbot@wishlistproject.com',
-          subject: poster.name+' commented on your wishlist: '+result._name,
-          text: poster.name+': '+req.body.msg,
-          html: '<p>'+poster.name+' <hr>'+req.body.msg,
+          subject: obj.poster.uname+' commented on your wishlist: '+obj.wishlist._name,
+          text: obj.poster.uname+': '+req.body.msg,
+          html: '<p>'+obj.poster.uname+' <hr>'+req.body.msg
         };
-        sgMail.send(msg);
 
+        sgMail.send(msg);
+    db.comments.create(req.body).then(function (result) {
+      res.json(result);
+    });
       })
       })
    
     })
 
-    db.comments.create(req.body).then(function (result) {
-      res.json(result);
-    });
+
   });
 
   //post route to create a new user
@@ -161,7 +172,7 @@ module.exports = function (app) {
     }).then(function (result) {
       if (result.length == 0) {
         db.users.create(req.body).then(function (result) {
-          const msg = {
+          var msg = {
             to: req.body.email,
             from: 'welcome@wishlistproject.com',
             subject: 'Welcome to wishlist!',
