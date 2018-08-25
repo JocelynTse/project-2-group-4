@@ -150,7 +150,7 @@ module.exports = function (app) {
           from: 'commentbot@wishlistproject.com',
           subject: obj.poster[0].uname+' commented on your wishlist: '+obj.wishlist[0]._name,
           text: obj.poster[0].uname+': '+req.body.msg,
-          html: '<p>'+obj.poster[0].uname+' <hr>'+req.body.msg
+          html: '<p>'+obj.poster[0].uname+' commented on your wishlist'+obj.wishlist[0]._name+' <hr>'+req.body.msg
         };
         console.log("-==================-------------------=================")
         console.log(JSON.stringify(msg))
