@@ -1,6 +1,6 @@
 var db = require("../models");
-//const sgMail = require('@sendgrid/mail');
-//sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = function (app) {
   app.get("/api/wishlists", function (req, res) {
@@ -82,6 +82,21 @@ module.exports = function (app) {
     })
   })
 
+
+  app.put("/api/privacy",function(req,res){
+   
+    if(req.body.private=='true'){
+          db.wishlists.update({private:true},{where:{id:req.body.id}}).then(function(result){
+      res.json(result);
+    })
+    }else{
+      db.wishlists.update({private:false},{where:{id:req.body.id}}).then(function(result){
+        res.json(result);
+      })
+    }
+
+  })
+
   app.get("/api/userbyeamil/:email", function (req, res) {
     let email = req.params.email;
     db.users.findAll({
@@ -112,9 +127,45 @@ module.exports = function (app) {
   //post route to create a new comment and assign it to a wishlist
   app.post("/api/comments", function (req, res) {
     // console.log(req.body)
+    var obj = {
+      wishlist:null,
+      poster:null,
+      user:null,
+
+    }
+    db.wishlists.findAll({where:{id:req.body.wishlistID}})
+    .then(function(wishlist){
+       obj.wishlist =wishlist;
+      db.users.findAll({where:{id:req.body.poster}})
+      .then(function(poster){
+        obj.poster=poster;
+        db.users.findAll({where:{id:wishlist[0].creatorID}})
+      .then(function(user){
+        obj.user=user;
+        console.log("-==================-------------------=================")
+        console.log(JSON.stringify(obj))
+        console.log("---------------------------------------------------")
+        var msg = {
+          to: obj.user[0].email,
+          from: 'commentbot@wishlistproject.com',
+          subject: obj.poster[0].uname+' commented on your wishlist: '+obj.wishlist[0]._name,
+          text: obj.poster[0].uname+': '+req.body.msg,
+          html: '<p>'+obj.poster[0].uname+' commented on your wishlist'+obj.wishlist[0]._name+' <hr>'+req.body.msg
+        };
+        console.log("-==================-------------------=================")
+        console.log(JSON.stringify(msg))
+        console.log("---------------------------------------------------")
+
+        sgMail.send(msg);
     db.comments.create(req.body).then(function (result) {
       res.json(result);
     });
+      })
+      })
+   
+    })
+
+
   });
 
   //post route to create a new user
@@ -126,7 +177,7 @@ module.exports = function (app) {
     }).then(function (result) {
       if (result.length == 0) {
         db.users.create(req.body).then(function (result) {
-          const msg = {
+          var msg = {
             to: req.body.email,
             from: 'welcome@wishlistproject.com',
             subject: 'Welcome to wishlist!',
@@ -215,7 +266,7 @@ module.exports = function (app) {
     }
   });
 
-  //optional(not mvp): put route to change a users password
+  
 
   //delete route to delete an item from a wishlist
   app.delete("/api/items", function (req, res) {
