@@ -143,13 +143,14 @@ module.exports = function (app) {
                 allComments.push(com);
               })
             });
-            var obj = {
+            setTimeout(function(){var obj = {
               wishlist: wishlist[0].dataValues,
               comments: allComments,
               items: allItems,
               creatorName: creatorName
             }
-            res.render('wishlist', obj);
+            res.render('wishlist', obj);},1000)
+
           })
         })
       })
