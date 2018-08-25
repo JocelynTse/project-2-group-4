@@ -16,7 +16,7 @@
 <div class="card">
     <h5 class="card-header">Create a new Wishlist account</h5>
     <div class="card-body">
-        <form action="/api/users" method="POST"> 
+        <form action="/api/users" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" aria-describedby="usernameHelp">
@@ -37,48 +37,45 @@
 </div>
 
 <script>
-$("#submitNewUser").on("click", function (event) {
-    // prevent page from refreshing when form tries to submit itself
-    event.preventDefault();
-    // Capture user inputs and store them into variables
-    var username = $("#username").val().trim();
-    var pass = $("#password").val().trim();
-    var email = $("#email").val().trim();
-    console.log(username);
-    console.log(email);
-    //console.log(pass);
-    // Clear sessionStorage
-    sessionStorage.clear();
-    // Store all content into sessionStorage
-    sessionStorage.setItem("name", name);
-    sessionStorage.setItem("email", email);
+    $("#submitNewUser").on("click", function (event) {
+        // prevent page from refreshing when form tries to submit itself
+        event.preventDefault();
+        // Capture user inputs and store them into variables
+        var username = $("#username").val().trim();
+        var pass = $("#password").val().trim();
+        var email = $("#email").val().trim();
+        console.log(username);
+        console.log(email);
+        //console.log(pass);
+        // Clear sessionStorage
+        sessionStorage.clear();
+        // Store all content into sessionStorage
+        sessionStorage.setItem("name", name);
+        sessionStorage.setItem("email", email);
 
-    firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(user){
-        console.log(user);
-        API.create.user(username,email).then(function(result){console.log(result)
-        if(result.redundantname){alert("a user with that name already exists :(")}
-        })
-        
-    }).catch(function (error) {
-        alert(error.message);
-    });
-})
-
-
-
+        firebase.auth().createUserWithEmailAndPassword(email, pass).then(function (user) {
+            console.log(user);
+            API.create.user(username, email).then(function (result) {
+                console.log(result)
+                if (result.redundantname) { alert("a user with that name already exists :(") }
+            })
+        }).catch(function (error) {
+            alert(error.message);
+        });
+    })
 
     firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        API.get.user.byEmail(user.email).then(function(result){
-            console.log(result)
-            temp=result;
-            localStorage.setItem('id',result.result[0].id);
-            localStorage.setItem('uname',result.result[0].uname);
-            localStorage.setItem('email',result.result[0].email);
-        });
-        console.log(firebase.auth().currentUser)
-        window.location = '/wishlist/new_list'; 
-        window.user = user;
-    }
-});
+        if (user) {
+            API.get.user.byEmail(user.email).then(function (result) {
+                console.log(result)
+                temp = result;
+                localStorage.setItem('id', result.result[0].id);
+                localStorage.setItem('uname', result.result[0].uname);
+                localStorage.setItem('email', result.result[0].email);
+            });
+            console.log(firebase.auth().currentUser)
+            window.location = '/wishlist/new_list';
+            window.user = user;
+        }
+    });
 </script>

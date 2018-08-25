@@ -3,23 +3,31 @@ var API = {
     wishlists: {
       all: function () {
         return new Promise(resolve => {
-          $.get("/api/wishlists").then(function (result) { resolve(result) })
+          $.get("/api/wishlists").then(function (result) {
+            resolve(result)
+          })
         })
       },
       byCreatorID: function (id) {
         return new Promise(resolve => {
-          $.get("/api/wishlists/byCreator/" + id).then(function (result) { resolve(result) })
+          $.get("/api/wishlists/byCreator/" + id).then(function (result) {
+            resolve(result)
+          })
         })
       },
-      byCreatorName: function(name){
-        return new Promise(resolve=> {
-          $.get("/api/user/"+name).then(function(result){
-            if(result.error==true){alert("no user by that name")}else{
+      byCreatorName: function (name) {
+        return new Promise(resolve => {
+          $.get("/api/user/" + name).then(function (result) {
+            if (result.error == true) {
+              alert("no user by that name")
+            } else {
 
-            
-            id = result.id;
-            console.log(id)
-            $.get("/api/wishlists/byCreator/"+id).then(function(result){resolve(result)})
+
+              id = result.id;
+              console.log(id)
+              $.get("/api/wishlists/byCreator/" + id).then(function (result) {
+                resolve(result)
+              })
             }
           })
         })
@@ -31,9 +39,9 @@ var API = {
           })
         })
       },
-      byWishlistID: function(id){
-        return new Promise(resolve=> {
-          $.get("/api/wishlists/id/"+id).then(function (result){
+      byWishlistID: function (id) {
+        return new Promise(resolve => {
+          $.get("/api/wishlists/id/" + id).then(function (result) {
             resolve(result);
           })
         })
@@ -51,90 +59,121 @@ var API = {
     comments: {
       byWishlistID: function (id) {
         return new Promise(resolve => {
-          $.get("/api/comments/" + id).then(function (result) { resolve(result) })
+          $.get("/api/comments/" + id).then(function (result) {
+            resolve(result)
+          })
         })
       }
     },
     user: {
-      byEmail: function(email){
+      byEmail: function (email) {
         return new Promise(resolve => {
-          $.get("/api/userbyeamil/"+email).then(function(result){
+          $.get("/api/userbyeamil/" + email).then(function (result) {
             resolve(result);
           })
         })
       }
     },
-    subscriptions:{
-      bySubscriberID: function(userid){
+    subscriptions: {
+      bySubscriberID: function (userid) {
         return new Promise(resolve => {
-          $.get("/api/subscriptions/"+userid).then(function(result){
-            
+          $.get("/api/subscriptions/" + userid).then(function (result) {
+
             resolve(result);
           })
         })
       },
-      isSubscribed:function(userID,wishlistID){
-        return new Promise(resolve=>{
-          $.get("/api/subscriptions/"+userID).then(function(result){
-            
-            if(result.length==0){
-              resolve({bool:false})
-            }else{
+      isSubscribed: function (userID, wishlistID) {
+        return new Promise(resolve => {
+          $.get("/api/subscriptions/" + userID).then(function (result) {
 
-            let bool = false;
-            let subscription = 0;
+            if (result.length == 0) {
+              resolve({
+                bool: false
+              })
+            } else {
 
-            result.forEach(element => {
-              if(wishlistID==element.wishlistID){
-                bool=true;
-                subscription=element.id;
-              }
-              resolve({bool:bool,id:subscription});
-            
-            });
-          }
+              let bool = false;
+              let subscription = 0;
+
+              result.forEach(element => {
+                if (wishlistID == element.wishlistID) {
+                  bool = true;
+                  subscription = element.id;
+                }
+                resolve({
+                  bool: bool,
+                  id: subscription
+                });
+
+              });
+            }
           })
         })
       }
     }
-    
+
 
   },
   create: {
-    wishlist: function (name, creatorId,private) {
-      let obj = { _name: name, creatorID: creatorId, private:private }
+    wishlist: function (name, creatorId, private) {
+      let obj = {
+        _name: name,
+        creatorID: creatorId,
+        private: private
+      }
       return new Promise(resolve => {
-        $.post("/api/wishlists", obj).then(function (result) { resolve(result) })
+        $.post("/api/wishlists", obj).then(function (result) {
+          resolve(result)
+        })
       })
 
     },
     item: function (name, wishlistId) {
-      let obj = { _name: name, wishlistID: wishlistId, checked: false }
+      let obj = {
+        _name: name,
+        wishlistID: wishlistId,
+        checked: false
+      }
       return new Promise(resolve => {
-        $.post("/api/items", obj).then(function (result) { resolve(result) })
+        $.post("/api/items", obj).then(function (result) {
+          resolve(result)
+        })
       })
 
     },
     user: function (name, email) {
-    console.log('hi');
+      console.log('hi');
       return new Promise(resolve => {
-        let obj = { uname: name, email: email }
-        $.post("/api/users", obj).then(function (result) { resolve(result) })
+        let obj = {
+          uname: name,
+          email: email
+        }
+        $.post("/api/users", obj).then(function (result) {
+          resolve(result)
+        })
       })
     },
     comment: function (message, poster, wishlistId) {
-      return new Promise(resolve=>{
-        let obj = { msg: message, poster: poster, wishlistID: wishlistId }
-      $.post("/api/comments", obj).then(function (result) {
-        resolve(result);
-      })
-  
+      return new Promise(resolve => {
+        let obj = {
+          msg: message,
+          poster: poster,
+          wishlistID: wishlistId
+        }
+        $.post("/api/comments", obj).then(function (result) {
+          resolve(result);
+        })
+
       })
     },
-    subscription: function(userID,wishlistID){
-      return new Promise(resolve=>{
-        let obj = {userID:userID,wishlistID:wishlistID};
-        $.post("/api/subscriptions",obj).then(function(result){
+    subscription: function (userID, wishlistID) {
+      return new Promise(resolve => {
+        let obj = {
+          userID: userID,
+          wishlistID: wishlistID
+        };
+        $.post("/api/subscriptions", obj).then(function (result) {
           resolve(result);
         })
       })
@@ -143,10 +182,21 @@ var API = {
   update: {
     check: function (checked, id, checked_by) {
       return new Promise(resolve => {
-        obj = { id: id, checked: checked, checked_by: checked_by }
+        obj = {
+          id: id,
+          checked: checked,
+          checked_by: checked_by
+        }
         console.log(obj)
-        $.ajax({ url: "/api/items", type: "PUT", data: obj, dataType: 'json' })
-          .then(function (result) { resolve(result); })
+        $.ajax({
+            url: "/api/items",
+            type: "PUT",
+            data: obj,
+            dataType: 'json'
+          })
+          .then(function (result) {
+            resolve(result);
+          })
       })
 
 
@@ -155,26 +205,52 @@ var API = {
   delete: {
     item: function (id) {
       return new Promise(resolve => {
-        let obj = {id:id}
-        $.ajax({url:"/api/items",type:"DELETE",data:obj,dataType:'json'})
-        .then(function (result) { resolve(result) })
+        let obj = {
+          id: id
+        }
+        $.ajax({
+            url: "/api/items",
+            type: "DELETE",
+            data: obj,
+            dataType: 'json'
+          })
+          .then(function (result) {
+            resolve(result)
+          })
       })
 
     },
-    comment:function(id){
-      return new Promise(resolve=>{
-        let obj = {id:id}
-        $.ajax({url:"/api/comment",type:"DELETE",data:obj,dataType:'json'})
-        .then(function(result){resolve(result) })
+    comment: function (id) {
+      return new Promise(resolve => {
+        let obj = {
+          id: id
+        }
+        $.ajax({
+            url: "/api/comment",
+            type: "DELETE",
+            data: obj,
+            dataType: 'json'
+          })
+          .then(function (result) {
+            resolve(result)
+          })
       })
     },
-    subscription:function(id){
-      return new Promise(resolve=>{
-        let obj = {id:id}
-        $.ajax({url:"/api/unsubscribe",type:"DELETE",data:obj,dataType:'json'})
-        .then(function(result){resolve(result) })
+    subscription: function (id) {
+      return new Promise(resolve => {
+        let obj = {
+          id: id
+        }
+        $.ajax({
+            url: "/api/unsubscribe",
+            type: "DELETE",
+            data: obj,
+            dataType: 'json'
+          })
+          .then(function (result) {
+            resolve(result)
+          })
       })
     }
   }
 }
-

@@ -1,135 +1,136 @@
 <div id="security">
-<header id="masthead">
-    <div class="container">
-        <a href="/" id="logo">
-            <img src="/images/logo.png">
-        </a>
-        <div id="metadata" data-creator="{{creatorName}}" data="{{wishlist.id}}"></div>
-        <nav>
-            <ul class="nav justify-content-end">
-                <p> {{wishlist._name}}</p><hr>
-                <p>created by: {{creatorName}}</p><hr>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wishlist/search">Search by user</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wishlist/new_list">Create a new list</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wishlist/yourlists">View your lists</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wishlists/subscriptions">View your subscriptions</a>
-                </li>
-                <li class="nav-item">
-                    <a id="logOut" class="nav-link" href="/">Log out</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+    <header id="masthead">
+        <div class="container">
+            <a href="/" id="logo">
+                <img src="/images/logo.png">
+            </a>
+            <div id="metadata" data-creator="{{creatorName}}" data="{{wishlist.id}}"></div>
+            <nav>
+                <ul class="nav justify-content-end">
+                    <p> {{wishlist._name}}</p>
+                    <hr>
+                    <p>created by: {{creatorName}}</p>
+                    <hr>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/wishlist/search">Search by user</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/wishlist/new_list">Create a new list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/wishlist/yourlists">View your lists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/wishlists/subscriptions">View your subscriptions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logOut" class="nav-link" href="/">Log out</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<div id="list">
-    <div>
-        <h3>unchecked</h3>
-        {{#each items}} {{#unless checked}} {{>listsAdmin-block checked=false}} {{/unless}} {{/each}}
+    <div id="list">
+        <div>
+            <h3>unchecked</h3>
+            {{#each items}} {{#unless checked}} {{>listsAdmin-block checked=false}} {{/unless}} {{/each}}
+        </div>
+        <div>
+            <h3>checked</h3>
+            {{#each items}} {{#if checked}} {{>listsAdmin-block checked=true}} {{/if}} {{/each}}
+        </div>
+        <br>
+        <hr>
+        <h3>add item</h3>
+        <br>
+
+        <input id="input-item" type="text">
+        </input>
+        <br><br>
+        <button id="submitItem">Submit</button>
     </div>
-    <div>
-        <h3>checked</h3>
-        {{#each items}} {{#if checked}} {{>listsAdmin-block checked=true}} {{/if}} {{/each}}
-    </div>
-    <br>
     <hr>
-    <h3>add item</h3>
-    <br>
 
-    <input id="input-item" type="text">
-    </input>
-    <br><br>
-    <button id="submitItem">Submit</button>
-</div>
-<hr>
+    <div id="comments">
+        <div>
+            <h3>comments</h3>
+            {{#each comments}} {{>commentsAdmin-block}} {{/each}}
+        </div>
 
-<div id="comments">
-    <div>
-        <h3>comments</h3>
-        {{#each comments}} {{>commentsAdmin-block}} {{/each}}
+        <input id="input-comment" type="text">
+        </input>
+        <br><br>
+        <button id="submitComment">Submit</button>
+
     </div>
-
-<input id="input-comment" type="text">
-</input>
-<br><br>
-<button id="submitComment">Submit</button>
-
-</div>
 
 </div>
 
 <script>
     // click events and logic for wishlist page
-let creatorName = $("#metadata").attr("data-creator");
+    let creatorName = $("#metadata").attr("data-creator");
 
-if(creatorName != localStorage.uname){
-    $("#security").empty();
-    $("#security").html("<h1>you do not own this wishlist</h1><br><p>only the owner of this wishlist may manipulate data using this page</p>")
-}
+    if (creatorName != localStorage.uname) {
+        $("#security").empty();
+        $("#security").html("<h1>you do not own this wishlist</h1><br><p>only the owner of this wishlist may manipulate data using this page</p>")
+    }
 
+    $(".check").on("click", function (event) {
+        id = $(this).attr('data-id');
+        console.log(id)
+        checked = $(this).attr('data-checked');
+        console.log(checked)
+        if (checked == false) {
+            API.update.check(checked, id, "feature coming soon").then(function (result) { console.log(result); location.reload() });
+        }
+        if (checked) { API.update.check(checked, id, "nobody").then(function (result) { console.log(result); location.reload(); }) }
 
-$(".check").on("click", function (event) {
-  id = $(this).attr('data-id');
-  console.log(id)
-  checked = $(this).attr('data-checked');
-  console.log(checked)
-  if (checked == false) {
-    API.update.check(checked, id, "feature coming soon").then(function (result) { console.log(result); location.reload() });
-  }
-  if(checked){API.update.check(checked,id,"nobody").then(function(result){console.log(result);location.reload();})}
-  
-});
-console.log("loaded")
-
-$(".delete_item").on("click",function(event){
-    let id = $(this).attr('data-id');
-    API.delete.item(id).then(function(result){
-        console.log(result);
-        location.reload();
-    })
-})
-
-$(".delete_comment").on("click",function(event){
-    let id = $(this).attr('data-id');
-    API.delete.comment(id).then(function(result){
-        console.log(result);
-        location.reload();
-    })
-})
-
-$("#submitItem").on("click", function (event) {
-  let name = $("#input-item").val();
-  url = window.location.href;
-  url = url.split('/');
-  id = url.pop();
-  API.create.item(name, id).then(function (result) {
-    location.reload();
-  });
-});
-
-$("#submitComment").on("click",function(result){
-    let msg = $("#input-comment").val().trim();
-    let id = localStorage.id;
-    let url = window.location.href;
-    url = url.split('/');
-    let wlid = url.pop();
-    API.create.comment(msg,id,wlid).then(function(result){
-        console.log("result");
-        location.reload();
-    })
-})
-
-$("#logOut").on("click", function (event) {
-    event.preventDefault();
-    firebase.auth().signOut().then(function(){localStorage.clear();window.location.href = "/";}).catch(function (error) {
-        console.log(error.message);
     });
-});
+    console.log("loaded")
+
+    $(".delete_item").on("click", function (event) {
+        let id = $(this).attr('data-id');
+        API.delete.item(id).then(function (result) {
+            console.log(result);
+            location.reload();
+        })
+    })
+
+    $(".delete_comment").on("click", function (event) {
+        let id = $(this).attr('data-id');
+        API.delete.comment(id).then(function (result) {
+            console.log(result);
+            location.reload();
+        })
+    })
+
+    $("#submitItem").on("click", function (event) {
+        let name = $("#input-item").val();
+        url = window.location.href;
+        url = url.split('/');
+        id = url.pop();
+        API.create.item(name, id).then(function (result) {
+            location.reload();
+        });
+    });
+
+    $("#submitComment").on("click", function (result) {
+        let msg = $("#input-comment").val().trim();
+        let id = localStorage.id;
+        let url = window.location.href;
+        url = url.split('/');
+        let wlid = url.pop();
+        API.create.comment(msg, id, wlid).then(function (result) {
+            console.log("result");
+            location.reload();
+        })
+    })
+
+    $("#logOut").on("click", function (event) {
+        event.preventDefault();
+        firebase.auth().signOut().then(function () { localStorage.clear(); window.location.href = "/"; }).catch(function (error) {
+            console.log(error.message);
+        });
+    });
 </script>
