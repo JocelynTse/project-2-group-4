@@ -2,7 +2,7 @@
 
 * Project Manager: Reza Rastegar
 * Git Master: Jocelyn Tse
-* Deployed Project: Heroku deployed link
+* Deployed Project: https://pacific-woodland-18236.herokuapp.com/
 * GitHub repository: https://github.com/JocelynTse/project-2-group-4.git
 
 # PROJECT PROPOSAL : Wishlist App
